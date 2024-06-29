@@ -1,0 +1,26 @@
+#body {
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 51%, rgba(178,0,185,1) 100%);
+}
+
+#logo {
+    width: 30%;
+}
+
+#button {
+    width: 75px;
+    background: rgb(192, 113, 248);
+    border-width: 1px;
+    border-color: white;
+    color: white;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+#input {
+    width: 50%;
+}
+
+#message {
+    color: red;
+}
