@@ -22,8 +22,11 @@ controller.login = async (req, res) => {//cambiar el html pulsar boton login
         res.redirect(`/login?message=${message}`)
     } else {
         console.log('El usuario existe')    //Renderizar pagina de usuario
+        res.render('user', {
+            option : 'Select option',
+            username : object.username
+        })
     }
-    res.end()
 }
 
 export default controller

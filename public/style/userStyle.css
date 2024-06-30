@@ -1,0 +1,51 @@
+#body {
+    height: 100px;
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 51%, rgba(178,0,185,1) 100%);
+}
+
+#logo {
+    position: absolute;
+    width: 30%;
+    bottom: 0;
+    z-index: 0;
+}
+
+#menu {
+    padding-left: 0px;
+}
+
+#menuicon {
+    width: 90px;
+    position: absolute;
+    top: 30px;
+    left: 10px;
+}
+
+#desplegable {
+    height: max-content;
+    min-height: 100%;
+    display: none;
+}
+
+#menu:hover #menuicon{
+    width: 0px;
+}
+
+#menu:hover {
+    padding-left: 0px;
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    transition: 1s;
+    z-index: 1;
+}
+
+#menu:hover #desplegable{
+    display: flex;
+    left: 0;
+    background: linear-gradient(90deg, rgb(21, 6, 186) 0%, rgb(6, 101, 253) 51%, rgb(255, 255, 255) 100%);
+    color: white;
+    transition: 1s;
+}
