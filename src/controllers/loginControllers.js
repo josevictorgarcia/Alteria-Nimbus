@@ -24,7 +24,8 @@ controller.login = async (req, res) => {//cambiar el html pulsar boton login
         console.log('El usuario existe')    //Renderizar pagina de usuario
         res.render('user', {
             option : 'Select option',
-            username : object.username
+            username : object.username,
+            friends : object.friends
         })
     }
 }

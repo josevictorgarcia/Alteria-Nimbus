@@ -80,3 +80,25 @@
     height: 90px;
     border-radius: 50%;
 }
+
+#addFriend {
+    align-items: center;
+    display: none;
+    margin-left: 30px;
+}
+
+#button2 {
+    width: 50%;
+    height: 40px;
+    background: rgb(192, 113, 248);
+    border-width: 1px;
+    border-color: white;
+    color: white;
+    border-radius: 6px;
+}
+
+#friend {
+    width: 50%;
+    height: 40px;
+    border-radius: 6px;
+}

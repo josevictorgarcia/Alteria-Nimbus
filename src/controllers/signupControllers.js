@@ -9,7 +9,7 @@ controller.signup = async (req, res) => {
     const object = await userModels.findOne({ username : username })
     if(object === null){
         console.log('El usuario NO existe') //Renderizar pagina de usuario
-        await userModels.create({ username : username, password : password }) //Anadimos el usuario a la base de datos
+        await userModels.create({ username : username, password : password, friends : [] }) //Anadimos el usuario a la base de datos
         res.render('user', {
             option : 'Select option',
             username : username

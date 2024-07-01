@@ -8,6 +8,7 @@ import { __dirname } from './dirname.js'
 import indexRouter from './routes/indexRoutes.js'
 import loginRouter from './routes/loginRoutes.js'
 import signupRouter from './routes/signupRoutes.js'
+import userRouter from './routes/userRoutes.js'
 
 const app = express()
 const server = http.createServer(app)
@@ -24,6 +25,7 @@ app.use(express.static(path.join(__dirname, '/../public')));
 app.use(indexRouter)
 app.use(loginRouter)
 app.use(signupRouter)
+app.use(userRouter)
 
 io.on('connection', (socket) => {
     console.log(`User connected: ${socket.id}`)
