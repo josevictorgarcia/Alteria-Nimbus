@@ -41,6 +41,7 @@
     visibility: hidden;
     position: absolute;
     z-index: -1;
+    overflow: scroll;
 }
 
 #menu:hover #desplegable{
@@ -51,4 +52,31 @@
     position: absolute;
     z-index: 0;
     transition: 1s;
+}
+
+#chat {
+    background: linear-gradient(90deg, rgba(178,0,185,1) 0%, rgb(223, 53, 235) 51%, rgb(255, 255, 255) 100%);
+    border-radius: 4px;
+    height: 100px;
+}
+
+#chat:hover {
+    background:rgb(152, 0, 198);
+}
+
+#button {
+    width: 100%;
+    background: rgb(192, 113, 248);
+    border-width: 1px;
+    border-color: white;
+    color: white;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+#avatar {
+    vertical-align: center;
+    width:  90px;
+    height: 90px;
+    border-radius: 50%;
 }
