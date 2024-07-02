@@ -11,8 +11,9 @@ controller.signup = async (req, res) => {
         console.log('El usuario NO existe') //Renderizar pagina de usuario
         await userModels.create({ username : username, password : password, friends : [] }) //Anadimos el usuario a la base de datos
         res.render('user', {
-            option : 'Select option',
-            username : username
+            option : 'Chats',
+            username : username,
+            friends : []
         })
     } else {
         let message = 'User already exists' //Renderizar mensaje de error

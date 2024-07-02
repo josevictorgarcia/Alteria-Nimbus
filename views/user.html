@@ -23,7 +23,7 @@
                         <a id="option" style="color: rgba(239, 174, 22, 1); width: 50vw;">{{option}}</a>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownmenubar" style="background-color: rgba(239, 174, 22, 1); text-align: center; width: 50vw;">
-                        <li><a class="dropdown-item" onclick="loadChats('{{username}}')" id="dropdownmenu">Chats</a></li>
+                        <li><a class="dropdown-item" onclick="reloadPage('{{username}}')" id="dropdownmenu">Chats</a></li>
                         <li><a class="dropdown-item" href="" id="dropdownmenu">AlterAI</a></li>
                         <li><a class="dropdown-item" href="" id="dropdownmenu">My account</a></li>
                     </ul>
@@ -64,9 +64,9 @@
             <div id="addFriend" class="row">
                 <label for="friendUsername">Username:</label>
                 <input id="friend" type="text" placeholder="Your friend's username">
-                <button id="button2" onclick="addFriend('{{username}}')">+ Add friend</button><br>
-                <div id="message" style="width: 50%; text-align: center;"></div><br><br>
-            </div>
+                <button id="button2" onclick="this.disabled=true ; addFriend('{{username}}')">+ Add friend</button><br>
+                <div id="message" style="width: 50%; text-align: center;"></div>
+            </div><br><br>
         </div>
     </div>
 
@@ -82,11 +82,6 @@
     <!--mongodb+srv://victorgarciallorente20:oGMeQ2nBfc2JiGBN@cluster0.xi3nezk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0-->
 
     <script>
-        async function loadChats(username){
-            console.log(`Loading ${username} chats`)
-            document.getElementById('option').innerHTML = 'Chats'
-        }
-
         async function addChat(){
             document.getElementById('button').style.display = "none"
             document.getElementById('addFriend').style.display = "block"
@@ -94,22 +89,33 @@
 
         async function addFriend(username){
             let friend = document.getElementById('friend').value
-            console.log('Adding friend ' + friend + ' to ' + username)
             const response = await fetch(`/addFriend?username=${username}&friend=${friend}`)
             const isAValidFriend = await response.text()
-            console.log(isAValidFriend)
-
             let message = document.getElementById('message')
+            let buttonAddFriend = document.getElementById('button2')
+
+            message.style.color = 'lightgreen'
+            message.innerHTML = 'Adding friend...'
+
             if (isAValidFriend === "true"){
-                message.style.color = 'lightgreen'
-                message.innerHTML = 'Friend added successfully. Reload page to show in your chat list'
+                await reloadPage(username)
             } else if (isAValidFriend === "false") {
                 message.style.color = 'red'
                 message.innerHTML = 'Friend does not exist'
+                buttonAddFriend.disabled = false
             } else if (isAValidFriend === "duplicated") {
                 message.style.color = 'red'
-                message.innerHTML = 'Same friend can not be added twice'
+                message.innerHTML = 'Same friend can not be added twice. Reload page or login again if your friend is not on the list'
+                buttonAddFriend.disabled = false
             }
+        }
+
+        async function reloadPage(username){
+            await new Promise(r => setTimeout(r, 1000));
+            const response = await fetch(`/reloadUserPage?username=${username}`)
+            const newHtml = await response.text()
+            const body = document.getElementById("body")
+            body.innerHTML = newHtml
         }
     </script>
 </body>

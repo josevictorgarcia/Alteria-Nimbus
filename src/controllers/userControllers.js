@@ -20,4 +20,14 @@ controller.addFriend = async (req, res) => {
     }
 }
 
+controller.reloadPage = async (req, res) => {
+    await connection()
+    let object = await userModels.findOne({ username : req.query.username })
+    res.render('user', {
+        option : 'Chats',
+        username : object.username,
+        friends : object.friends
+    })
+}
+
 export default controller
