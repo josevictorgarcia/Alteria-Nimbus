@@ -7,4 +7,6 @@ router.get('/addFriend', controller.addFriend)
 
 router.get('/reloadUserPage', controller.reloadPage)
 
+router.get('/loadChatMessages', controller.getChatMessages)
+
 export default router
