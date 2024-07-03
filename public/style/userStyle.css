@@ -111,31 +111,3 @@
     text-align: center;
     z-index: 1;
 }
-
-#screen {
-    width: 85%;
-    height: 70vh;
-    display: inline-block;
-    background-color: white;
-    border-radius: 6px;
-    background: rgb(179, 216, 249);
-    overflow: scroll;
-}
-
-#inputMessage {
-    width: 75%;
-    max-width: 100%;
-    height: 40px;
-    border-radius: 6px;
-}
-
-#button3 {
-    width: 75px;
-    height: 40px;
-    background: rgb(192, 113, 248);
-    border-width: 1px;
-    border-color: white;
-    color: white;
-    border-radius: 6px;
-    padding: 8px;
-}

@@ -9,16 +9,7 @@ controller.addFriend = async (req, res) => {
     let object = await userModels.findOne({ username : req.query.username })
     let friend = await userModels.findOne({ username : req.query.friend })
 
-    let username = req.query.username               //Compactarlo todo en una sola funcion
-    let friendname = req.query.friend
-    let room = ''
-    if(username<friendname){
-        room = username.concat('UiL.').concat(friendname)
-    } else{
-        room = friendname.concat('UiL.').concat(username)
-    }
-    room = room.concat("ay&27ffcGYiY")
-    room = "3B9g3D8V".concat(room)
+    let room = makeRoom(req.query.username, req.query.friend)
     await chatModels.create({ name : room, messages : [] })
 
     if (friend === null){   //Significa que el amigo no existe
@@ -34,6 +25,18 @@ controller.addFriend = async (req, res) => {
     }
 }
 
+function makeRoom(username, friend) {
+    let room = ''
+    if(username<friend){
+        room = username.concat('UiL.').concat(friend)
+    } else{
+        room = friend.concat('UiL.').concat(username)
+    }
+    room = room.concat("ay&27ffcGYiY")
+    room = "3B9g3D8V".concat(room)
+    return room
+}
+
 controller.reloadPage = async (req, res) => {
     await connection()
     let object = await userModels.findOne({ username : req.query.username })
@@ -44,17 +47,16 @@ controller.reloadPage = async (req, res) => {
     })
 }
 
+controller.getChatBox = async (req,res) => {
+    res.render('chatBox', {
+        username : req.query.username,
+        friend : req.query.friend
+    })
+}
+
 controller.getChatMessages = async (req, res) => {
-    let username = req.query.username                       //Compactarlo todo en una sola funcion
-    let friend = req.query.friend
-    let room = ''
-    if(username<friend){
-        room = username.concat('UiL.').concat(friend)
-    } else{
-        room = friend.concat('UiL.').concat(username)
-    }
-    room = room.concat("ay&27ffcGYiY")
-    room = "3B9g3D8V".concat(room)
+    let username = req.query.username
+    let room = makeRoom(req.query.username, req.query.friend)
 
     await connection()
     let object = await chatModels.findOne({ name : room })
