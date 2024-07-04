@@ -6,6 +6,7 @@
     border-radius: 6px;
     background: rgb(179, 216, 249);
     overflow: scroll;
+    scroll-behavior: smooth;
 }
 
 #inputMessage {

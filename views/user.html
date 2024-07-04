@@ -134,6 +134,7 @@
             let screen = document.getElementById("screen")
             screen.innerHTML = messages
             chatBox.style.display = 'block'
+            screen.scrollTop = screen.scrollHeight
             socket.emit('join-room-friend', username, friend)
         }
 
@@ -147,6 +148,7 @@
             const response = await fetch(`/printMessage?username=${username}&message=${message}&receiver=${username}`)
             const newHtml = await response.text()
             screen.innerHTML += newHtml
+            screen.scrollTop = screen.scrollHeight
             socket.emit('send-message', message, username, friend)
         }
     </script>
@@ -159,6 +161,7 @@
             const response = await fetch(`/printMessage?username=${username}&message=${message}&receiver=${friend}`)
             const newHtml = await response.text()
             screen.innerHTML += newHtml
+            screen.scrollTop = screen.scrollHeight
         })
     </script>
 </body>
