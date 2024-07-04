@@ -83,7 +83,7 @@
     <!--Password: oGMeQ2nBfc2JiGBN-->
     <!--mongodb+srv://victorgarciallorente20:oGMeQ2nBfc2JiGBN@cluster0.xi3nezk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0-->
 
-    <script>
+    <script>        
         async function addChat(){
             document.getElementById('button').style.display = "none"
             document.getElementById('addFriend').style.display = "block"
@@ -142,10 +142,23 @@
             let screen = document.getElementById("screen")
             input.value = ''
 
-            const response = await fetch(`/saveMessage?message=${message}&username=${username}&friend=${friend}`)
+            await fetch(`/saveMessage?message=${message}&username=${username}&friend=${friend}`)
+            const response = await fetch(`/printMessage?username=${username}&message=${message}&receiver=${username}`)
             const newHtml = await response.text()
             screen.innerHTML += newHtml
+            socket.emit('send-message', message, username, friend)
         }
+    </script>
+
+    <script>
+        const socket = io()
+
+        socket.on('receive-message', async (message, username, friend) => {
+            let screen = document.getElementById("screen")
+            const response = await fetch(`/printMessage?username=${username}&message=${message}&receiver=${friend}`)
+            const newHtml = await response.text()
+            screen.innerHTML += newHtml
+        })
     </script>
 </body>
 </html>

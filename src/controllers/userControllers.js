@@ -91,7 +91,12 @@ controller.saveMessage = async (req, res) => {
     let object = await chatModels.findOne({ name : room })
     object.messages.push(message)
     object.save('done')
-    setMessageStyle(message, req.query.username)
+    res.end()
+}
+
+controller.printMessage = async (req, res) => {
+    let message = { message : req.query.message, sender : req.query.username }
+    setMessageStyle(message, req.query.receiver)
     res.render('message', {
         messages : message
     })

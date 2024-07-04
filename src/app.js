@@ -32,6 +32,10 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         console.log(`User disconnected: ${socket.id}`)
     })
+
+    socket.on('send-message', (message, username, friend) => {
+        io.emit('receive-message', message, username, friend)
+    })
 })
 
 server.listen(3000, () => {
