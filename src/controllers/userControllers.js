@@ -37,6 +37,18 @@ function makeRoom(username, friend) {
     return room
 }
 
+function setMessageStyle(message, username){
+    if(message.sender == username) {
+        message.messageBox = 'usernameMessage'
+        message.pictureAndName = 'usernamePictureAndName'
+        message.messageText = 'usernameMessageText'
+    } else {
+        message.messageBox = 'friendMessage'
+        message.pictureAndName = 'friendPictureAndName'
+        message.messageText = 'friendMessageText'
+    }
+}
+
 controller.reloadPage = async (req, res) => {
     await connection()
     let object = await userModels.findOne({ username : req.query.username })
@@ -64,18 +76,24 @@ controller.getChatMessages = async (req, res) => {
     //res.json(object.messages)
     for (let i=0; i<object.messages.length; i++) {
         let message = object.messages[i]
-        if(message.sender == username) {
-            message.messageBox = 'usernameMessage'
-            message.pictureAndName = 'usernamePictureAndName'
-            message.messageText = 'usernameMessageText'
-        } else {
-            message.messageBox = 'friendMessage'
-            message.pictureAndName = 'friendPictureAndName'
-            message.messageText = 'friendMessageText'
-        }
+        setMessageStyle(message, username)
     }
     res.render('message', {
         messages : object.messages,
+    })
+}
+
+controller.saveMessage = async (req, res) => {
+    let room = makeRoom(req.query.username, req.query.friend)
+    let message = { message : req.query.message, sender : req.query.username }
+
+    await connection()
+    let object = await chatModels.findOne({ name : room })
+    object.messages.push(message)
+    object.save('done')
+    setMessageStyle(message, req.query.username)
+    res.render('message', {
+        messages : message
     })
 }
 

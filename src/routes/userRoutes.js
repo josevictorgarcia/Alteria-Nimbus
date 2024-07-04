@@ -11,4 +11,6 @@ router.get('/loadChatBox', controller.getChatBox)
 
 router.get('/loadChatMessages', controller.getChatMessages)
 
+router.get('/saveMessage', controller.saveMessage)
+
 export default router

@@ -137,7 +137,14 @@
         }
 
         async function sendMessage(username, friend){
-            console.log(username, friend)
+            let input = document.getElementById("inputMessage")
+            let message = input.value
+            let screen = document.getElementById("screen")
+            input.value = ''
+
+            const response = await fetch(`/saveMessage?message=${message}&username=${username}&friend=${friend}`)
+            const newHtml = await response.text()
+            screen.innerHTML += newHtml
         }
     </script>
 </body>
