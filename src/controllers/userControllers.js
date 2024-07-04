@@ -103,3 +103,4 @@ controller.printMessage = async (req, res) => {
 }
 
 export default controller
+export { makeRoom }

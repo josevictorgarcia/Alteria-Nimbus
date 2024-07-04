@@ -9,6 +9,7 @@ import indexRouter from './routes/indexRoutes.js'
 import loginRouter from './routes/loginRoutes.js'
 import signupRouter from './routes/signupRoutes.js'
 import userRouter from './routes/userRoutes.js'
+import { makeRoom } from './controllers/userControllers.js'
 
 const app = express()
 const server = http.createServer(app)
@@ -33,8 +34,17 @@ io.on('connection', (socket) => {
         console.log(`User disconnected: ${socket.id}`)
     })
 
+    socket.on('join-room-friend', (username, friend) => {
+        let room = makeRoom(username, friend)
+        if(socket.room != undefined){
+            socket.leave(socket.room)
+        }
+        socket.room = room
+        socket.join(room)
+    })
+
     socket.on('send-message', (message, username, friend) => {
-        io.emit('receive-message', message, username, friend)
+        socket.to(socket.room).emit('receive-message', message, username, friend)
     })
 })
 

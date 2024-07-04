@@ -134,6 +134,7 @@
             let screen = document.getElementById("screen")
             screen.innerHTML = messages
             chatBox.style.display = 'block'
+            socket.emit('join-room-friend', username, friend)
         }
 
         async function sendMessage(username, friend){
