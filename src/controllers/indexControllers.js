@@ -13,4 +13,10 @@ controller.getLoginPage = (req, res) => {
     })
 }
 
+controller.getRoomsPage = (req, res) => {
+    res.render('rooms', {
+        
+    })
+}
+
 export default controller

@@ -10,4 +10,6 @@ router.get('/', controller.index)
 
 router.get('/login', controller.getLoginPage)
 
+router.get('/rooms', controller.getRoomsPage)
+
 export default router

@@ -34,6 +34,14 @@ io.on('connection', (socket) => {
         console.log(`User disconnected: ${socket.id}`)
     })
 
+    socket.on('join-room', (room) => {
+        if(socket.room != undefined){
+            socket.leave(socket.room)
+        }
+        socket.room = room
+        socket.join(room)
+    })
+
     socket.on('join-room-friend', (username, friend) => {
         let room = makeRoom(username, friend)
         if(socket.room != undefined){

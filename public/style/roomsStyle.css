@@ -1,0 +1,21 @@
+#body {
+    height: 100px;
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 51%, rgba(178,0,185,1) 100%);
+    overflow: hidden;
+}
+
+#logo {
+    position: absolute;
+    width: 30%;
+    bottom: 0;
+    z-index: 0;
+}
+
+#chatBox {
+    display: none;
+    position: relative;
+    margin-top: 100px;
+    text-align: center;
+    z-index: 1;
+}
