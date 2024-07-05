@@ -19,6 +19,13 @@
 
     <div id="chatBox" class="container"></div>
 
+    <div id="joinRoom" class="container">
+        <input id="inputRoom" class="col-md-3">
+        <button id="buttonJoinRoom" class="col-md-3" onclick="joinRoom()">Join room</button>
+        <div id="roomMessage" style="margin-top: 10px;"></div>
+    </div>
+    
+
     <!--DATABASE-->
     <!--Username: victorgarciallorente20-->
     <!--Password: oGMeQ2nBfc2JiGBN-->
@@ -27,12 +34,14 @@
     <script>
         async function loadChat(id){
             let chatBox = document.getElementById("chatBox")
+            let message = document.getElementById("roomMessage")
             console.log(id)
             const chatBoxResponse = await fetch(`/loadChatBox?username=${id}`)  //no definimos friend porque solo nos interesa nuestra id
             const chatBoxText = await chatBoxResponse.text()
             chatBox.innerHTML = chatBoxText
             chatBox.style.display = 'block'
             socket.emit('join-room', 'global')
+            message.innerHTML = 'You are in room global'
         }
 
         async function sendMessage(username, friend){
@@ -46,6 +55,16 @@
             screen.innerHTML += newHtml
             screen.scrollTop = screen.scrollHeight
             socket.emit('send-message', message, username, friend)
+        }
+
+        async function joinRoom() {
+            let room = document.getElementById("inputRoom").value
+            let message = document.getElementById("roomMessage")
+            let screen = document.getElementById("screen")
+            screen.innerHTML = ''
+            socket.emit('join-room', room)
+            document.getElementById("inputRoom").value = ''
+            message.innerHTML = 'You are in room ' + room
         }
     </script>
 

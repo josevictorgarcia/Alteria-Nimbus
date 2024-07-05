@@ -15,7 +15,34 @@
 #chatBox {
     display: none;
     position: relative;
-    margin-top: 100px;
+    margin-top: 20px;
     text-align: center;
     z-index: 1;
+}
+
+#joinRoom {
+    margin-top: 10px;
+    position: relative;
+    text-align: center;
+    z-index: 1;
+    width: 85%;
+    height: 90vh;
+}
+
+#inputRoom {
+    width: 75%;
+    max-width: 100%;
+    height: 40px;
+    border-radius: 6px;
+}
+
+#buttonJoinRoom {
+    width: 100px;
+    height: 40px;
+    background: rgb(192, 113, 248);
+    border-width: 1px;
+    border-color: white;
+    color: white;
+    border-radius: 6px;
+    padding: 8px;
 }
