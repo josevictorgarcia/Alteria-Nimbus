@@ -17,11 +17,20 @@
         </div>
     </div>
 
+    <div id="backgroundUsernameForm">
+        <div id="usernameForm">
+            <div style="margin-bottom: 20px; color: white;">Enter your username:</div>
+            <input id="inputUser" type="text">
+            <button id="buttonJoinRoom" onclick="loadChat()">Start!</button>
+        </div>
+    </div>
+
+
     <div id="chatBox" class="container"></div>
 
     <div id="joinRoom" class="container">
         <input id="inputRoom" class="col-md-3">
-        <button id="buttonJoinRoom" class="col-md-3" onclick="joinRoom()">Join room</button>
+        <button id="buttonJoinRoom" class="col-md-3" onclick="joinRoom('{{username}}')">Join room</button>
         <div id="roomMessage" style="margin-top: 10px;"></div>
     </div>
     
@@ -32,14 +41,25 @@
     <!--mongodb+srv://victorgarciallorente20:oGMeQ2nBfc2JiGBN@cluster0.xi3nezk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0-->
     
     <script>
-        async function loadChat(id){
+        async function getUsername(){
+            document.getElementById('backgroundUsernameForm').style.opacity = 0.8
+            document.getElementById('backgroundUsernameForm').style.transitionDuration = '2s'
+            document.getElementById('usernameForm').display = 'block'
+        }
+
+        async function loadChat(){
+            document.getElementById('backgroundUsernameForm').style.opacity = 0
+            document.getElementById('backgroundUsernameForm').style.transitionDuration = '2s'
+            let username = document.getElementById("inputUser").value
+            let joinRoom = document.getElementById("joinRoom")
             let chatBox = document.getElementById("chatBox")
             let message = document.getElementById("roomMessage")
-            console.log(id)
-            const chatBoxResponse = await fetch(`/loadChatBox?username=${id}`)  //no definimos friend porque solo nos interesa nuestra id
+            console.log(username)
+            const chatBoxResponse = await fetch(`/loadChatBox?username=${username}`)  //no definimos friend porque solo nos interesa nuestra id
             const chatBoxText = await chatBoxResponse.text()
             chatBox.innerHTML = chatBoxText
             chatBox.style.display = 'block'
+            joinRoom.style.display = 'block'
             socket.emit('join-room', 'global')
             message.innerHTML = 'You are in room global'
         }
@@ -71,7 +91,7 @@
     <script>
         const socket = io()
         socket.on('connect' , () => {
-            loadChat(socket.id)
+            getUsername()
         });
 
         socket.on('receive-message', async (message, username, friend) => {
