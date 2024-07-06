@@ -12,4 +12,6 @@ router.get('/login', controller.getLoginPage)
 
 router.get('/rooms', controller.getRoomsPage)
 
+router.get('/random', controller.getRandomPage)
+
 export default router

@@ -10,6 +10,7 @@ import loginRouter from './routes/loginRoutes.js'
 import signupRouter from './routes/signupRoutes.js'
 import userRouter from './routes/userRoutes.js'
 import { makeRoom } from './controllers/userControllers.js'
+import { connectNoInterests } from './random.js'
 
 const app = express()
 const server = http.createServer(app)
@@ -53,6 +54,27 @@ io.on('connection', (socket) => {
 
     socket.on('send-message', (message, username, friend) => {
         socket.to(socket.room).emit('receive-message', message, username, friend)
+    })
+
+    socket.on('connectNoInterests', (id) => {
+        let room = connectNoInterests(id)
+        //Nos quedamos con la room connectNoInterests y mandamos señal para que el otro socket reactive los botones y sepa que hay alguien mas conectado
+        let stopBlocking = false
+        let newRoom = ""
+        if(room != id){
+            stopBlocking = true
+            newRoom = makeRoom(id, room)
+            io.sockets.in(room).emit('update-room', newRoom)
+        }
+
+        if(socket.room != undefined){   //Nos unimos a la room
+            socket.leave(socket.room)
+        }
+        socket.room = newRoom
+        socket.join(newRoom)
+        if(stopBlocking){
+            io.sockets.in(newRoom).emit('update-room', newRoom) //Lo mandamos una segunda vez para que el que se conecta mas tarde reactive los botones
+        }
     })
 })
 

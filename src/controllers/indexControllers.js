@@ -19,4 +19,10 @@ controller.getRoomsPage = (req, res) => {
     })
 }
 
+controller.getRandomPage = (req, res) => {
+    res.render('random', {
+        
+    })
+}
+
 export default controller

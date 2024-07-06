@@ -1,0 +1,107 @@
+#body {
+    height: 100px;
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 51%, rgba(178,0,185,1) 100%);
+    overflow: hidden;
+}
+
+#logo {
+    position: absolute;
+    width: 30%;
+    bottom: 0;
+    z-index: 0;
+}
+
+#chatBox {
+    display: none;
+    position: relative;
+    margin-top: 20px;
+    text-align: center;
+    z-index: 1;
+}
+
+#joinRandom {
+    display: none;
+    margin-top: 10px;
+    position: relative;
+    text-align: center;
+    z-index: 1;
+    width: 85%;
+    height: 90vh;
+}
+
+#buttonRandom {
+    width: 100px;
+    height: 40px;
+    background: rgb(192, 113, 248);
+    border-width: 1px;
+    border-color: white;
+    color: white;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+#inputSkip {
+    width: 75%;
+    max-width: 100%;
+    height: 40px;
+    border-radius: 6px;
+}
+
+#buttonSkip {
+    width: 100px;
+    height: 40px;
+    background: rgb(192, 113, 248);
+    border-width: 1px;
+    border-color: white;
+    color: white;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+#inputAdd {
+    width: 75%;
+    max-width: 100%;
+    height: 40px;
+    border-radius: 6px;
+}
+
+#buttonAdd {
+    width: 100px;
+    height: 40px;
+    background: rgb(192, 113, 248);
+    border-width: 1px;
+    border-color: white;
+    color: white;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+#inputUser {
+    width: 75%;
+    max-width: 100%;
+    height: 40px;
+    border-radius: 6px;
+}
+
+#backgroundUsernameForm {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(75, 34, 76);
+    opacity: 0;
+    z-index: 1;
+}
+
+#usernameForm {
+    position: absolute;
+    background: rgb(149, 0, 255);
+    top: 33.3vh;
+    height: 33.3vh;
+    right: 33.3vw;
+    width: 33.3vw;
+    text-align: center;
+    align-content: center;
+    z-index: 1;
+    border-radius: 6px;
+}
