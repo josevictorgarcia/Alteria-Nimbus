@@ -10,7 +10,7 @@ import loginRouter from './routes/loginRoutes.js'
 import signupRouter from './routes/signupRoutes.js'
 import userRouter from './routes/userRoutes.js'
 import { makeRoom } from './controllers/userControllers.js'
-import { connectNoInterests } from './random.js'
+import { connectNoInterests, connectInterests, resetAllInterests } from './random.js'
 
 const app = express()
 const server = http.createServer(app)
@@ -75,6 +75,48 @@ io.on('connection', (socket) => {
         if(stopBlocking){
             io.sockets.in(newRoom).emit('update-room', newRoom) //Lo mandamos una segunda vez para que el que se conecta mas tarde reactive los botones
         }
+    })
+
+    socket.on('connectInterests', (id, commonInterests) => {
+        let room = connectInterests(id, commonInterests)
+        let stopBlocking = false
+        let newRoom = ""
+        if(room != id) {
+            stopBlocking = true
+            newRoom = makeRoom(id, room)
+            io.sockets.in(room).emit('update-room', newRoom)
+            io.sockets.in(room).emit('reset-interests')
+            io.sockets.in(room).emit('get-common-interests', commonInterests)
+        }
+
+        if(socket.room != undefined) {
+            socket.leave(socket.room)
+        }
+        socket.room = newRoom
+        socket.join(newRoom)
+        if(stopBlocking){
+            io.sockets.in(newRoom).emit('update-room', newRoom)
+            io.sockets.in(newRoom).emit('reset-interests')
+            io.sockets.in(newRoom).emit('get-common-interests', commonInterests)
+        }
+    })
+
+    socket.on('reset-interests', (interests) => {
+        resetAllInterests(interests)
+    })
+
+    socket.on('get-common-interests', (userInterests, friendInterests) => {
+        let interestsToPrint = []
+        let visitados = new Set()
+        for (let i=0; i<userInterests.length; i++){
+            for (let j=0; j<friendInterests.length; j++){
+                if (userInterests[i] == friendInterests[j] && !visitados.has(userInterests[i])){
+                    visitados.add(userInterests[i])
+                    interestsToPrint.push(userInterests[i])
+                }
+            }
+        }
+        io.sockets.in(socket.room).emit('print-interests', interestsToPrint)
     })
 })
 

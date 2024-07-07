@@ -94,7 +94,7 @@
             if (commonInterests.length === 0) {
                 socket.emit('connectNoInterests', socket.id)
             } else {
-
+                socket.emit('connectInterests', socket.id, commonInterests)
             }
         }
     </script>
@@ -122,6 +122,20 @@
             document.getElementById("randomMessage").innerHTML = "You are now connected to a random stranger"
         })
 
+        socket.on('reset-interests', () => {
+            socket.emit('reset-interests', commonInterests)
+        })
+
+        socket.on('get-common-interests', (friendInterests) => {
+            socket.emit('get-common-interests', commonInterests, friendInterests)
+        })
+
+        socket.on('print-interests', (interests) => {
+            let message = "You both like: "
+            console.log(interests)
+            interests.forEach(elem => message += elem + " ")
+            document.getElementById("randomMessage").innerHTML = message
+        })
     </script>
 </body>
 </html>
