@@ -13,9 +13,12 @@ function connectNoInterests (id) {
     return valueToReturn
 }
 
-function resetAllInterests(interests) {
+function resetAllInterests(id, interests) {
+    console.log(id)
     for (let i=0; i<interests.length; i++){
-        interestsMap.set(interests[i], undefined)
+        if(interestsMap.get(interests[i]) == id){
+            interestsMap.set(interests[i], undefined)
+        }
     }
     console.log(interestsMap)
 }

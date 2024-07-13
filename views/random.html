@@ -29,13 +29,14 @@
     <div id="chatBox" class="container"></div>
 
     <div id="joinRandom" class="container">
-        <input id="inputSkip" class="col-md-3">
         <button id="buttonSkip" class="col-md-3" onclick="skip()">Skip</button>
-        <input id="inputAdd" class="col-md-3">
-        <button id="buttonAdd" class="col-md-3" onclick="">Add</button>
+        <input id="inputAdd" placeholder="Add interests" class="col-md-3">
+        <button id="buttonAdd" class="col-md-3" onclick="addInterest()">Add</button>
         <div id="randomMessage" style="margin-top: 10px;"></div>
     </div>
     
+    <div id="listOfInterests" class="container">
+    </div>
 
     <!--DATABASE-->
     <!--Username: victorgarciallorente20-->
@@ -79,22 +80,38 @@
         }
 
         async function skip() {
-            let inputAdd = document.getElementById("inputAdd")
+            addInterest()
             let screen = document.getElementById("screen")
-            const interest = inputAdd.value
-            if(interest != ""){commonInterests.push(interest)}   //Si no ponemos nada en un input, su valor es ""
-            inputAdd.value = ""
             
             screen.innerHTML = ""
             document.getElementById("button3").disabled = true
             document.getElementById("buttonSkip").disabled = true
             document.getElementById("buttonAdd").disabled = true
-            document.getElementById("randomMessage").innerHTML = "Connecting to a random stranger..."
             
             if (commonInterests.length === 0) {
+                document.getElementById("randomMessage").innerHTML = "Connecting to a random stranger..."
                 socket.emit('connectNoInterests', socket.id)
             } else {
+                document.getElementById("randomMessage").innerHTML = "Connecting to a random stranger with common interests..."
                 socket.emit('connectInterests', socket.id, commonInterests)
+            }
+        }
+
+        async function addInterest(){
+            let inputAdd = document.getElementById("inputAdd")
+            let listOfInterests = document.getElementById("listOfInterests")
+            const interest = inputAdd.value
+            if(interest != ""){
+                commonInterests.push(interest)
+                inputAdd.value = ""
+
+                let html = '<ul>'
+                for (let i=0; i<commonInterests.length; i++){
+                    html += `<li id="interest">${commonInterests[i]}<span id="interestCloseButton">x</span></li>`
+                }
+                html += '</ul>'
+                listOfInterests.innerHTML = html
+                listOfInterests.scrollIntoView()
             }
         }
     </script>
@@ -123,7 +140,7 @@
         })
 
         socket.on('reset-interests', () => {
-            socket.emit('reset-interests', commonInterests)
+            socket.emit('reset-interests', socket.id, commonInterests)
         })
 
         socket.on('get-common-interests', (friendInterests) => {

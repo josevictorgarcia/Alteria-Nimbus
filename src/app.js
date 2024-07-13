@@ -97,12 +97,12 @@ io.on('connection', (socket) => {
         if(stopBlocking){
             io.sockets.in(newRoom).emit('update-room', newRoom)
             io.sockets.in(newRoom).emit('reset-interests')
-            io.sockets.in(newRoom).emit('get-common-interests', commonInterests)
+            //io.sockets.in(newRoom).emit('get-common-interests', commonInterests)
         }
     })
 
-    socket.on('reset-interests', (interests) => {
-        resetAllInterests(interests)
+    socket.on('reset-interests', (id, interests) => {
+        resetAllInterests(id, interests)
     })
 
     socket.on('get-common-interests', (userInterests, friendInterests) => {
