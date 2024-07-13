@@ -80,13 +80,14 @@
         }
 
         async function skip() {
-            addInterest()
+            //addInterest()
             let screen = document.getElementById("screen")
             
             screen.innerHTML = ""
             document.getElementById("button3").disabled = true
             document.getElementById("buttonSkip").disabled = true
             document.getElementById("buttonAdd").disabled = true
+            document.getElementById("listOfInterests").hidden = true
             
             if (commonInterests.length === 0) {
                 document.getElementById("randomMessage").innerHTML = "Connecting to a random stranger..."
@@ -97,22 +98,32 @@
             }
         }
 
+        async function printInterests(){
+            let listOfInterests = document.getElementById("listOfInterests")
+
+            let html = '<ul>'
+            for (let i=0; i<commonInterests.length; i++){
+                html += `<li id="interest">${commonInterests[i]}<span id="interestCloseButton" onclick="removeInterest(${i})">x</span></li>`
+            }
+            html += '</ul>'
+            listOfInterests.innerHTML = html
+            listOfInterests.scrollIntoView()
+        }
+
         async function addInterest(){
             let inputAdd = document.getElementById("inputAdd")
-            let listOfInterests = document.getElementById("listOfInterests")
             const interest = inputAdd.value
             if(interest != ""){
                 commonInterests.push(interest)
                 inputAdd.value = ""
-
-                let html = '<ul>'
-                for (let i=0; i<commonInterests.length; i++){
-                    html += `<li id="interest">${commonInterests[i]}<span id="interestCloseButton">x</span></li>`
-                }
-                html += '</ul>'
-                listOfInterests.innerHTML = html
-                listOfInterests.scrollIntoView()
+                printInterests()
             }
+        }
+
+        async function removeInterest(index){
+            let i = parseInt(index)
+            commonInterests.splice(i, 1)
+            printInterests()
         }
     </script>
 
@@ -136,6 +147,7 @@
             document.getElementById("button3").disabled = false
             document.getElementById("buttonSkip").disabled = false
             document.getElementById("buttonAdd").disabled = false
+            document.getElementById("listOfInterests").hidden = false
             document.getElementById("randomMessage").innerHTML = "You are now connected to a random stranger"
         })
 
