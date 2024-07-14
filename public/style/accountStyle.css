@@ -1,0 +1,65 @@
+#body {
+    height: 100px;
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 51%, rgba(178,0,185,1) 100%);
+}
+
+#logo {
+    position: absolute;
+    width: 30%;
+    bottom: 0;
+    z-index: 0;
+}
+
+#infoContainer {
+    position: relative;
+    margin-top: 30px;
+    padding-bottom: 30px;
+    background: rgba(22, 22, 237, 0.5);
+    color: white;
+    border-radius: 7px;
+    z-index: 1;
+}
+
+#title {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+#field {
+    margin: 15px;
+    text-align: center;
+}
+
+#usernameInput {
+    border-radius: 6px;
+}
+
+#buttonChange {
+    background: rgb(192, 113, 248);
+    border-width: 1px;
+    border-color: white;
+    color: white;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+#avatar {
+    vertical-align: center;
+    width:  40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+#back {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background: rgb(192, 113, 248);
+    border-width: 1px;
+    border-color: white;
+    color: white;
+    border-radius: 6px;
+    width: 90px;
+    height: 40px;
+}
