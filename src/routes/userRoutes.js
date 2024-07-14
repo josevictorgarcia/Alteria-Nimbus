@@ -15,4 +15,6 @@ router.get('/saveMessage', controller.saveMessage)
 
 router.get('/printMessage', controller.printMessage)
 
+router.get('/account', controller.getAccountPage)
+
 export default router

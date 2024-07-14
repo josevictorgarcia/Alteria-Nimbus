@@ -102,5 +102,42 @@ controller.printMessage = async (req, res) => {
     })
 }
 
+async function getNumFriends(username){
+    await connection()
+    let object = await userModels.findOne({ username : username })
+    return object.friends.length
+}
+
+async function getNumMessages(username){
+    await connection()
+    let object = await userModels.findOne({ username : username })
+    let max = -1
+    let bestFriend = "You have no friends"
+    let totalMessages = 0
+    for(let i=0; i<object.friends.length; i++){
+        let friend = object.friends[i]
+        let chatName = makeRoom(username, friend)
+        let object2 = await chatModels.findOne({ name : chatName })
+        totalMessages += object2.messages.length
+        if(object2.messages.length >= max){
+            max = object2.messages.length
+            bestFriend = friend
+        }
+    }
+    return { bestFriend, totalMessages }
+}
+
+controller.getAccountPage = async (req, res) => {
+    let username = req.query.username
+    let numFriends = await getNumFriends(username)
+    let statsMessages = await getNumMessages(username)
+    res.render('account', {
+        username : username,
+        numFriends : numFriends,
+        bestFriend : statsMessages.bestFriend,
+        numMessages : statsMessages.totalMessages
+    })
+}
+
 export default controller
 export { makeRoom }
