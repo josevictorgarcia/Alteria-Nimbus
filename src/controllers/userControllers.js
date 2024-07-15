@@ -131,12 +131,16 @@ controller.getAccountPage = async (req, res) => {
     let { username } = req.body
     let userObject = await getNumFriends(username)
     let statsMessages = await getNumMessages(username)
+    let signupDate = userObject.signupDate.toLocaleDateString("en-GB")
+    let loginDate = userObject.loginDate.toLocaleDateString("en-GB")
     res.render('account', {
         username : username,
         numFriends : userObject.friends.length,
         bestFriend : statsMessages.bestFriend,
         numMessages : statsMessages.totalMessages,
-        usageTime : userObject.usageTime
+        usageTime : userObject.usageTime,
+        signupDate : signupDate,
+        loginDate : loginDate
     })
 }
 
@@ -144,7 +148,7 @@ controller.updateUsageTime = async (req, res) => {
     await connection()
     let time = parseInt(req.query.time)
     let seconds = (time / 1000).toFixed(0)
-    await userModels.updateOne({ username : req.query.username }, {$inc: {usageTime : seconds} })
+    await userModels.updateOne({ username : req.query.username }, { $inc : {usageTime : seconds} })
     //object.usageTime += seconds           //No funciona con estas dos lineas (usageTime se trataria como un String), hay que usar updateOne con $inc
     //object.save('done')
     res.end()

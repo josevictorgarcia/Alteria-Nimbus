@@ -22,6 +22,7 @@ controller.login = async (req, res) => {//cambiar el html pulsar boton login
         res.redirect(`/login?message=${message}`)
     } else {
         console.log('El usuario existe')    //Renderizar pagina de usuario
+        await  userModels.updateOne({ username : username }, { $set : {loginDate : new Date()} })
         res.render('user', {
             option : 'Chats',
             username : object.username,
