@@ -105,7 +105,7 @@ controller.printMessage = async (req, res) => {
 async function getNumFriends(username){
     await connection()
     let object = await userModels.findOne({ username : username })
-    return object.friends.length
+    return object
 }
 
 async function getNumMessages(username){
@@ -128,15 +128,26 @@ async function getNumMessages(username){
 }
 
 controller.getAccountPage = async (req, res) => {
-    let username = req.query.username
-    let numFriends = await getNumFriends(username)
+    let { username } = req.body
+    let userObject = await getNumFriends(username)
     let statsMessages = await getNumMessages(username)
     res.render('account', {
         username : username,
-        numFriends : numFriends,
+        numFriends : userObject.friends.length,
         bestFriend : statsMessages.bestFriend,
-        numMessages : statsMessages.totalMessages
+        numMessages : statsMessages.totalMessages,
+        usageTime : userObject.usageTime
     })
+}
+
+controller.updateUsageTime = async (req, res) => {
+    await connection()
+    let time = parseInt(req.query.time)
+    let seconds = (time / 1000).toFixed(0)
+    await userModels.updateOne({ username : req.query.username }, {$inc: {usageTime : seconds} })
+    //object.usageTime += seconds           //No funciona con estas dos lineas (usageTime se trataria como un String), hay que usar updateOne con $inc
+    //object.save('done')
+    res.end()
 }
 
 export default controller

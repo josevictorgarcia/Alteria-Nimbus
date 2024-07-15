@@ -15,6 +15,8 @@ router.get('/saveMessage', controller.saveMessage)
 
 router.get('/printMessage', controller.printMessage)
 
-router.get('/account', controller.getAccountPage)
+router.post('/account', controller.getAccountPage)
+
+router.get('/updateUsageTime', controller.updateUsageTime)
 
 export default router
