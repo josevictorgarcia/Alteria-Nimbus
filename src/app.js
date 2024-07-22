@@ -11,6 +11,7 @@ import signupRouter from './routes/signupRoutes.js'
 import userRouter from './routes/userRoutes.js'
 import { makeRoom } from './controllers/userControllers.js'
 import { connectNoInterests, connectInterests, resetAllInterests } from './random.js'
+import accountRouter from './routes/accountRoutes.js'
 
 const app = express()
 const server = http.createServer(app)
@@ -28,6 +29,7 @@ app.use(indexRouter)
 app.use(loginRouter)
 app.use(signupRouter)
 app.use(userRouter)
+app.use(accountRouter)
 
 io.on('connection', (socket) => {
     console.log(`User connected: ${socket.id}`)

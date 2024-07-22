@@ -131,8 +131,8 @@ controller.getAccountPage = async (req, res) => {
     let { username } = req.body
     let userObject = await getNumFriends(username)
     let statsMessages = await getNumMessages(username)
-    let signupDate = userObject.signupDate.toLocaleDateString("en-GB")
-    let loginDate = userObject.loginDate.toLocaleDateString("en-GB")
+    let signupDate = userObject.signupDate.toLocaleString("en-GB")
+    let loginDate = userObject.loginDate.toLocaleString("en-GB")
     res.render('account', {
         username : username,
         numFriends : userObject.friends.length,
