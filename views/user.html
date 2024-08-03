@@ -54,12 +54,12 @@
                 <div style="height: 100px; width: 30%; float: left; position: relative; align-items: center;"><img id="avatar" src="https://png.pngtree.com/png-clipart/20230927/original/pngtree-man-avatar-image-for-profile-png-image_13001882.png" alt="Profile picture" style="width: 90px;"></div>
                 <div style="height: 30px; width: 70%; float: right; position: relative;">Username</div>
             </div>
-            {{#friends}}
-            <div id="chat" onclick="displayChat('{{username}}', '{{.}}')">
-                <div style="height: 100px; width: 30%; float: left; position: relative; align-items: center;"><img id="avatar" src="img/alterianimbus.png" alt="Profile picture" style="width: 90px;"></div>
-                <div style="height: 30px; width: 70%; float: right; position: relative;">{{.}}</div>
+            {{#friendsAndPictures}}
+            <div id="chat" onclick="displayChat('{{username}}', '{{friendName}}')">
+                <div style="height: 100px; width: 30%; float: left; position: relative; align-items: center;"><img id="avatar" src="{{pfp}}" alt="Profile picture" style="width: 90px;"></div>
+                <div style="height: 30px; width: 70%; float: right; position: relative;">{{friendName}}</div>
             </div>
-            {{/friends}}
+            {{/friendsAndPictures}}
         <!--Fin lista de chats-->
             <br><br><div>
                 <div class="col-md-12"><button id="button" onclick="addChat()">+ Add chat</button></div>

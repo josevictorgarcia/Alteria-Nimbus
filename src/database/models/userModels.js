@@ -7,7 +7,8 @@ const userSchema = new Schema ({
     friends: Array,
     usageTime: Number,
     signupDate: Date,
-    loginDate: Date
+    loginDate: Date,
+    pfp : String
 })
 
 const userModels = mongoose.model('users', userSchema)

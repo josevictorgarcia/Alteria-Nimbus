@@ -25,10 +25,11 @@
         </div>
         <div id="field" class="row">
             <div class="col-md-3">Profile picture:</div>
-            <div id="avatarInput" class="col-md-3"><img id="avatar" src="img/alterianimbus.png" alt=""></div>
-            <form action="/uploadProfilePicture" method="post" class="col-md-6" style="padding: 0px; text-align: center; height: 42px;">
+            <div id="avatarInput" class="col-md-3"><img id="avatar" src="{{pfp}}" alt=""></div>
+            <form action="/uploadProfilePicture" method="post" enctype="multipart/form-data" class="col-md-6" style="padding: 0px; text-align: center; height: 42px;">
                 <label id="buttonAvatar" for="file">Upload</label>
-                <input id="file" style="visibility: hidden; width: 0; " type="file" name="avatar" onchange="this.form.submit()">
+                <input id="file" style="visibility: hidden; width: 0; "type="file" name="avatar" onchange="this.form.submit()">
+                <input style="display: none;" type="text" name="username" value="{{username}}">
             </form>
         </div>
     </div>

@@ -1,6 +1,7 @@
 import connection from '../database/connection.js'
 import userModels from '../database/models/userModels.js'
 import chatModels from '../database/models/chatModels.js'
+import { getFriendsAndPictures } from './loginControllers.js'
 
 const controller = {}
 
@@ -52,10 +53,11 @@ function setMessageStyle(message, username){
 controller.reloadPage = async (req, res) => {
     await connection()
     let object = await userModels.findOne({ username : req.query.username })
+    let friendsAndPictures = await getFriendsAndPictures(object)
     res.render('user', {
         option : 'Chats',
         username : object.username,
-        friends : object.friends
+        friendsAndPictures : friendsAndPictures
     })
 }
 
@@ -133,6 +135,7 @@ controller.getAccountPage = async (req, res) => {
     let statsMessages = await getNumMessages(username)
     let signupDate = userObject.signupDate.toLocaleString("en-GB")
     let loginDate = userObject.loginDate.toLocaleString("en-GB")
+    let pfp = userObject.pfp
     res.render('account', {
         username : username,
         numFriends : userObject.friends.length,
@@ -140,7 +143,8 @@ controller.getAccountPage = async (req, res) => {
         numMessages : statsMessages.totalMessages,
         usageTime : userObject.usageTime,
         signupDate : signupDate,
-        loginDate : loginDate
+        loginDate : loginDate,
+        pfp : pfp
     })
 }
 
