@@ -28,4 +28,22 @@ controller.uploadProfilePicture = async (req, res) => {
     }
 }
 
+controller.changePassword = async (req, res) => {
+    let { username, oldPassword, newPassword } = req.body
+    console.log(username, oldPassword, newPassword)
+    const object = await userModels.findOne({ username : username, password : oldPassword })
+    if (object === null) {  //Contrasena incorrecta
+        res.render('infoMessage', {
+            message : 'Old password incorrect',
+            username : username
+        })
+    } else {
+        await userModels.updateOne({ username : username }, { $set : {password : newPassword} })
+        res.render('infoMessage', {
+            message : 'Password updated successfully',
+            username : username
+        })
+    }
+}
+
 export default controller

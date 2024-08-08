@@ -8,4 +8,6 @@ const router = express.Router()
 
 router.post('/uploadProfilePicture', upload.single('avatar'), controller.uploadProfilePicture)
 
+router.post('/changePassword', controller.changePassword)
+
 export default router

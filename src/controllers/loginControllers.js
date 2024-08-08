@@ -25,7 +25,7 @@ controller.login = async (req, res) => {//cambiar el html pulsar boton login
     //console.log(users)
     let { username, password } = req.body
     const object = await userModels.findOne({ username : username, password : password })
-    console.log(object)
+    //console.log(object)
     if(object === null){
         let message = 'Username or password not valid'  //Renderizar mensaje de error
         res.redirect(`/login?message=${message}`)
@@ -33,7 +33,7 @@ controller.login = async (req, res) => {//cambiar el html pulsar boton login
         console.log('El usuario existe')    //Renderizar pagina de usuario
         await  userModels.updateOne({ username : username }, { $set : {loginDate : new Date()} })
         let friendsAndPictures = await getFriendsAndPictures(object)
-        console.log(friendsAndPictures)
+        //console.log(friendsAndPictures)
         res.render('user', {
             option : 'Chats',
             username : object.username,

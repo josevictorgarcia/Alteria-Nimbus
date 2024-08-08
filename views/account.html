@@ -21,14 +21,22 @@
         <div id="field" class="row">
             <div class="col-md-3">Password:</div>
             <div id="usernameInput" class="col-md-3">???</div>
-            <button class="col-md-6" id="buttonChange">Change</button>
+            <button class="col-md-6" id="buttonChange" onclick="getPasswordForm()">Change</button>
+        </div>
+        <div id="hiddenFieldPassword" class="row">
+            <form action="/changePassword" method="post">
+                <input id="inputPassword" type="text" name="oldPassword" class="col-md-3" placeholder="Old Password">
+                <input id="inputPassword" type="text" name="newPassword" class="col-md-3" placeholder="New Password">
+                <input style="display: none;" type="text" name="username" value="{{username}}">
+                <input id="buttonPassword" type="submit" class="col-md-3">
+            </form>
         </div>
         <div id="field" class="row">
             <div class="col-md-3">Profile picture:</div>
             <div id="avatarInput" class="col-md-3"><img id="avatar" src="{{pfp}}" alt=""></div>
             <form action="/uploadProfilePicture" method="post" enctype="multipart/form-data" class="col-md-6" style="padding: 0px; text-align: center; height: 42px;">
                 <label id="buttonAvatar" for="file">Upload</label>
-                <input id="file" style="visibility: hidden; width: 0; "type="file" name="avatar" onchange="this.form.submit()">
+                <input id="file" style="visibility: hidden; width: 0;" type="file" name="avatar" onchange="this.form.submit()">
                 <input style="display: none;" type="text" name="username" value="{{username}}">
             </form>
         </div>
@@ -69,5 +77,15 @@
     <!--Password: oGMeQ2nBfc2JiGBN-->
     <!--mongodb+srv://victorgarciallorente20:oGMeQ2nBfc2JiGBN@cluster0.xi3nezk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0-->
 
+    <script>
+        async function getPasswordForm(){
+            let passwordForm = document.getElementById('hiddenFieldPassword')
+            if (passwordForm.style.display === 'none' || passwordForm.style.display === ''){
+                passwordForm.style.display = 'block'
+            } else {
+                passwordForm.style.display = 'none'
+            }
+        }
+    </script>
 </body>
 </html>
