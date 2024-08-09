@@ -38,12 +38,32 @@
     display: none;
 }
 
+#hiddenFieldUsername {
+    margin: 15px;
+    text-align: center;
+    display: none;
+}
+
 #inputPassword {
     padding: 8px;
     border-radius: 6px;
 }
 
+#inputUsername {
+    padding: 8px;
+    border-radius: 6px;
+}
+
 #buttonPassword {
+    background: rgb(192, 113, 248);
+    border-width: 1px;
+    border-color: white;
+    color: white;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+#buttonUsername {
     background: rgb(192, 113, 248);
     border-width: 1px;
     border-color: white;

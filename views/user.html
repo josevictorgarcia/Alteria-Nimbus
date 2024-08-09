@@ -34,26 +34,6 @@
             </div>
             <!--Fin dropdown-->
             <!--Lista de chats-->
-            <div id="chat" onclick="displayChat('{{username}}', '{{Username}}')">
-                <div style="height: 100px; width: 30%; float: left; position: relative; align-items: center;"><img id="avatar" src="img/alterianimbus.png" alt="Profile picture" style="width: 90px;"></div>
-                <div style="height: 30px; width: 70%; float: right; position: relative;">Username</div>
-            </div>
-            <div id="chat" onclick="displayChat('{{username}}', '{{Username}}')">
-                <div style="height: 100px; width: 30%; float: left; position: relative; align-items: center;"><img id="avatar" src="https://upload.wikimedia.org/wikipedia/commons/a/af/Default_avatar_profile.jpg" alt="Profile picture" style="width: 90px;"></div>
-                <div style="height: 30px; width: 70%; float: right; position: relative;">Username</div>
-            </div>
-            <div id="chat" onclick="displayChat('{{username}}', '{{Username}}')">
-                <div style="height: 100px; width: 30%; float: left; position: relative; align-items: center;"><img id="avatar" src="https://cdn2.iconfinder.com/data/icons/circle-avatars-1/128/050_girl_avatar_profile_woman_suit_student_officer-512.png" alt="Profile picture" style="width: 90px;"></div>
-                <div style="height: 30px; width: 70%; float: right; position: relative;">Username</div>
-            </div>
-            <div id="chat" onclick="displayChat('{{username}}', '{{Username}}')">
-                <div style="height: 100px; width: 30%; float: left; position: relative; align-items: center;"><img id="avatar" src="https://static.vecteezy.com/system/resources/previews/002/275/847/non_2x/male-avatar-profile-icon-of-smiling-caucasian-man-vector.jpg" alt="Profile picture" style="width: 90px;"></div>
-                <div style="height: 30px; width: 70%; float: right; position: relative;">Username</div>
-            </div>
-            <div id="chat" onclick="displayChat('{{username}}', '{{Username}}')">
-                <div style="height: 100px; width: 30%; float: left; position: relative; align-items: center;"><img id="avatar" src="https://png.pngtree.com/png-clipart/20230927/original/pngtree-man-avatar-image-for-profile-png-image_13001882.png" alt="Profile picture" style="width: 90px;"></div>
-                <div style="height: 30px; width: 70%; float: right; position: relative;">Username</div>
-            </div>
             {{#friendsAndPictures}}
             <div id="chat" onclick="displayChat('{{username}}', '{{friendName}}')">
                 <div style="height: 100px; width: 30%; float: left; position: relative; align-items: center;"><img id="avatar" src="{{pfp}}" alt="Profile picture" style="width: 90px;"></div>
@@ -118,6 +98,10 @@
             } else if (isAValidFriend === "duplicated") {
                 message.style.color = 'red'
                 message.innerHTML = 'Same friend can not be added twice. Reload page or login again if your friend is not on the list'
+                buttonAddFriend.disabled = false
+            } else if (isAValidFriend === "error") {
+                message.style.color = 'red'
+                message.innerHTML = 'An error occurred. Please log in again'
                 buttonAddFriend.disabled = false
             }
         }

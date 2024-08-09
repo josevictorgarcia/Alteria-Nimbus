@@ -11,12 +11,17 @@ controller.addFriend = async (req, res) => {
     let friend = await userModels.findOne({ username : req.query.friend })
 
     let room = makeRoom(req.query.username, req.query.friend)
-    await chatModels.create({ name : room, messages : [] })
 
     if (friend === null){   //Significa que el amigo no existe
         res.send(false)
     } else {
-        if(object.friends.indexOf(req.query.friend) == -1){
+        if(object === null){
+            res.send("error")
+        }
+        else if(object.friends.indexOf(req.query.friend) == -1){
+            if (await chatModels.findOne({ name : room }) === null){    //Asi evitamos que salga un chat con id duplicado y vacio en la base de datos
+                await chatModels.create({ name : room, messages : [] })
+            }
             object.friends.push(req.query.friend)
             object.save('done')
             res.send(true)
@@ -38,6 +43,13 @@ function makeRoom(username, friend) {
     return room
 }
 
+function deconstructRoom(room){
+    let dosCadenas = room.split('UiL.')
+    let string1 = dosCadenas[0].slice(8)
+    let string2 = dosCadenas[1].slice(0, -12)
+    return [string1, string2]
+}
+
 function setMessageStyle(message, username){
     if(message.sender == username) {
         message.messageBox = 'usernameMessage'
@@ -53,12 +65,20 @@ function setMessageStyle(message, username){
 controller.reloadPage = async (req, res) => {
     await connection()
     let object = await userModels.findOne({ username : req.query.username })
-    let friendsAndPictures = await getFriendsAndPictures(object)
-    res.render('user', {
-        option : 'Chats',
-        username : object.username,
-        friendsAndPictures : friendsAndPictures
-    })
+    if(object === null) {   //Si el objeto no existe
+        res.redirect(`/login?message=${'An error occurred. Please log in again'}`)
+        /*res.render('infoMessage', {
+            message : 'An error occurred. Please log in again',
+            username : 'None'   //Username no sirve para nada, se podria quitar
+        })*/
+    } else {
+        let friendsAndPictures = await getFriendsAndPictures(object)
+        res.render('user', {
+            option : 'Chats',
+            username : object.username,
+            friendsAndPictures : friendsAndPictures
+        })
+    }
 }
 
 controller.getChatBox = async (req,res) => {
@@ -76,13 +96,19 @@ controller.getChatMessages = async (req, res) => {
     let object = await chatModels.findOne({ name : room })
     //console.log(object)
     //res.json(object.messages)
-    for (let i=0; i<object.messages.length; i++) {
-        let message = object.messages[i]
-        setMessageStyle(message, username)
+    if(object === null) {   //Si el objeto no existe
+        res.render('message', {
+            messages : [ { sender : 'Alteria Nimbus', message : 'An error occurred. Please log in again'} ]
+        })
+    } else {    //Comprobar si funciona
+        for (let i=0; i<object.messages.length; i++) {
+            let message = object.messages[i]
+            setMessageStyle(message, username)
+        }
+        res.render('message', {
+            messages : object.messages,
+        })
     }
-    res.render('message', {
-        messages : object.messages,
-    })
 }
 
 controller.saveMessage = async (req, res) => {
@@ -91,8 +117,10 @@ controller.saveMessage = async (req, res) => {
 
     await connection()
     let object = await chatModels.findOne({ name : room })
-    object.messages.push(message)
-    object.save('done')
+    if(object != null){
+        object.messages.push(message)
+        object.save('done')
+    }
     res.end()
 }
 
@@ -132,20 +160,27 @@ async function getNumMessages(username){
 controller.getAccountPage = async (req, res) => {
     let { username } = req.body
     let userObject = await getNumFriends(username)
-    let statsMessages = await getNumMessages(username)
-    let signupDate = userObject.signupDate.toLocaleString("en-GB")
-    let loginDate = userObject.loginDate.toLocaleString("en-GB")
-    let pfp = userObject.pfp
-    res.render('account', {
-        username : username,
-        numFriends : userObject.friends.length,
-        bestFriend : statsMessages.bestFriend,
-        numMessages : statsMessages.totalMessages,
-        usageTime : userObject.usageTime,
-        signupDate : signupDate,
-        loginDate : loginDate,
-        pfp : pfp
-    })
+    if (userObject === null){   //Si el objeto no existe
+        res.render('infoMessage', {
+            message : 'An error occurred. Please log in again',
+            username : username
+        })
+    } else {
+        let statsMessages = await getNumMessages(username)
+        let signupDate = userObject.signupDate.toLocaleString("en-GB")
+        let loginDate = userObject.loginDate.toLocaleString("en-GB")
+        let pfp = userObject.pfp
+        res.render('account', {
+            username : username,
+            numFriends : userObject.friends.length,
+            bestFriend : statsMessages.bestFriend,
+            numMessages : statsMessages.totalMessages,
+            usageTime : userObject.usageTime,
+            signupDate : signupDate,
+            loginDate : loginDate,
+            pfp : pfp
+        })
+    }
 }
 
 controller.updateUsageTime = async (req, res) => {
@@ -159,4 +194,4 @@ controller.updateUsageTime = async (req, res) => {
 }
 
 export default controller
-export { makeRoom }
+export { makeRoom, deconstructRoom }

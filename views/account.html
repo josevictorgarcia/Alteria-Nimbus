@@ -16,7 +16,14 @@
         <div id="field" class="row">
             <div class="col-md-3">Username:</div>
             <div id="usernameInput" class="col-md-3">{{username}}</div>
-            <button class="col-md-6" id="buttonChange">Change</button>
+            <button class="col-md-6" id="buttonChange" onclick="getUsernameForm()">Change</button>
+        </div>
+        <div id="hiddenFieldUsername" class="row">
+            <form action="/changeUsername" method="post">
+                <input id="inputUsername" type="text" name="newUsername" class="col-md-4" placeholder="New Username">
+                <input style="display: none;" type="text" name="username" value="{{username}}">
+                <input id="buttonUsername" type="submit" class="col-md-4">
+            </form>
         </div>
         <div id="field" class="row">
             <div class="col-md-3">Password:</div>
@@ -78,6 +85,15 @@
     <!--mongodb+srv://victorgarciallorente20:oGMeQ2nBfc2JiGBN@cluster0.xi3nezk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0-->
 
     <script>
+        async function getUsernameForm(){
+            let usernameForm = document.getElementById('hiddenFieldUsername')
+            if (usernameForm.style.display === 'none' || usernameForm.style.display === ''){
+                usernameForm.style.display = 'block'
+            } else {
+                usernameForm.style.display = 'none'
+            }
+        }
+
         async function getPasswordForm(){
             let passwordForm = document.getElementById('hiddenFieldPassword')
             if (passwordForm.style.display === 'none' || passwordForm.style.display === ''){

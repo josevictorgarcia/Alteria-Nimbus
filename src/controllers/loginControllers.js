@@ -14,7 +14,9 @@ async function getFriendsAndPictures(object){
     let friendsAndPictures = []
     for(let i=0; i<object.friends.length; i++){
         let friendObject = await userModels.findOne({ username : object.friends[i] })
-        friendsAndPictures.push({ friendName : friendObject.username, pfp : friendObject.pfp })
+        if(friendObject != null){
+            friendsAndPictures.push({ friendName : friendObject.username, pfp : friendObject.pfp })
+        }
     }
     return friendsAndPictures
 }
