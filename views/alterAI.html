@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alter AI Nimbus</title>
+
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      display: grid;
+      place-content: center;
+      height: 100dvh;
+      background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 51%, rgba(178,0,185,1) 100%);
+      overflow: hidden;
+    }
+
+    main {
+      width: 70vw;
+      max-width: 100%;
+      height: 70vh;
+
+      background: rgb(179, 216, 249);
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 8px;
+      margin-bottom: 16px;
+
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    ul {
+      display: flex;
+      flex-direction: column;
+      list-style: none;
+      padding: 0;
+    }
+
+    .message {
+      display: flex;
+      flex-direction: column;
+      margin: 4px 0;
+      padding: 4px 8px;
+
+      span {
+        width: 36px;
+        height: 36px;
+        background: #eee;
+        font-size: 12px;
+        font-weight: 500;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 999999px;
+      }
+
+      p {
+        border-radius: 4px;
+        padding: 4px 8px;
+        margin-top: 4px;
+      }
+
+      &.user {
+        align-self: flex-end;
+        align-items: flex-end;
+
+        span,
+        p {
+          margin-top: 20px; 
+          text-align: justify;  
+          border-radius: 6px; 
+          padding: 10px; 
+          margin-right : 20px; 
+          background: rgb(110, 179, 124);
+        }
+      }
+
+      &.bot {
+        align-self: flex-start;
+
+        span,
+        p {
+          margin-top: 20px; 
+          text-align: justify;  
+          border-radius: 6px; 
+          padding: 10px; 
+          margin-right : 20px; 
+          background: rgb(238, 157, 16);
+        }
+      }
+    }
+
+    div {
+      display: flex;
+
+      input {
+        width: 60vw;
+        max-width: 100%;
+        height: 40px;
+        border-radius: 6px;
+        margin-right: 8px;
+        border: 1px solid #ccc;
+      }
+
+      button {
+        width: 10vw;
+        background: rgb(192, 113, 248);
+        border-width: 1px;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        padding: 8px;
+        transition: background .3s ease;
+
+        &[disabled] {
+          background: #ccc;
+          opacity: .6;
+          pointer-events: none;
+        }
+
+        &:hover {
+          background: rgb(1, 65, 255);
+        }
+      }
+    }
+
+    small {
+      font-size: 10px;
+      color: #555;
+      position: fixed;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      margin: auto;
+      width: 400px;
+    }
+
+    .loading {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      height: 100%;
+      align-items: center;
+      flex-direction: column;
+      margin-top: 50%;
+
+      i {
+        pointer-events: none;
+        width: 2.5em;
+        height: 2.5em;
+        border: 0.4em solid transparent;
+        border-color: #eee;
+        border-top-color: #3E67EC;
+        border-radius: 50%;
+        animation: loadingspin 1s linear infinite;
+      }
+
+      h4 {
+        color: #444;
+        margin-bottom: 8px;
+      }
+
+      h5 {
+        font-weight: 400;
+        margin: 0;
+        font-size: 10px;
+        opacity: .4;
+      }
+    }
+
+    @keyframes loadingspin {
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+    
+    #logo {
+      position: absolute;
+      left: 72px;
+      width: 30%;
+      bottom: 0;
+      z-index: -1;
+    }
+
+    #avatar {
+      vertical-align: center;
+      width:  40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+  </style>
+  
+</head>
+
+<body id="body">
+
+    <div class="container">
+      <div class="row">
+          <div class="col-md-12"><img id="logo" src="img/alterianimbusTransparent.png"></div>
+      </div>
+    </div>
+
+    <main>
+        <ul>
+            <li class="message bot">
+                <img id="avatar" src="img/alterAIAvatar.png" alt="AlterAI">
+                <p>Hi! What can I help you with?</p>
+            </li>
+        </ul>
+    </main>
+
+    <div>
+        <input id="inputAI" placeholder="Ask me something!">
+        <div id="pfp" style="display: none;">{{pfp}}</div> <!--Nos servira para sacar la foto de perfil de usuario-->
+        <button onclick="askAI()">Enviar</button>
+    </div>
+
+  <template id="message-template">
+    <li class="message">
+      <div></div>
+      <p></p>
+    </li>
+  </template>
+
+  <script>
+
+  let engine = null
+  let messages = []
+  document.querySelector('button').setAttribute('disabled', "")
+  document.querySelector('button').innerHTML = 'Loading...'
+
+  function addMessage(sender, text){
+    const $template = document.querySelector('template')
+    const clonedTemplate = $template.content.cloneNode(true)
+    const $newMessage = clonedTemplate.querySelector('.message')
+
+    const pfp = document.getElementById('pfp').innerHTML
+
+    const $sender = $newMessage.querySelector('div')
+    const $text = $newMessage.querySelector('p')
+
+    $text.textContent = text
+    $sender.innerHTML = sender == 'bot' ? "<img id='avatar' src='img/alterAIAvatar.png' alt='AlterAI'/>" : `<img id='avatar' src=${pfp} alt='You'>`
+    $newMessage.classList.add(sender)
+
+    const $messages = document.querySelector('ul')
+    $messages.appendChild($newMessage)
+
+    const $container = document.querySelector('main')
+    $container.scrollTop = $container.scrollHeight          //Para hacer scroll en cuanto se escribe un mensaje
+
+    return $text
+  }
+
+  async function askAI(param){
+    //console.log(param)
+    
+    if(param!=undefined){
+        engine = param
+        document.querySelector('button').removeAttribute('disabled')
+        document.querySelector('button').innerHTML = 'Send'
+        return
+    }
+    //console.log(engine)
+
+    console.log("asking ai")
+
+    const $button = document.querySelector('button')
+    const $input = document.querySelector('input')
+    const $container = document.querySelector('main')
+
+    input = $input.value
+    $input.value = ""
+
+    //Escribimos el mensaje del usuario
+    addMessage('user', input)
+    $button.setAttribute('disabled', "")
+
+    /*setTimeout(() => {
+        addMessage('bot', 'Hola, cómo estás?')
+        $button.removeAttribute('disabled')
+    }, 2000)*/
+    //console.log(engine)
+
+    const userMessage = {
+        role:'user',
+        content: input
+    }
+
+    //Guardamos el nuevo mensaje en la lista de mensajes
+    messages.push(userMessage)
+
+    const chunks = await engine.chat.completions.create({
+        messages,
+        stream: true
+    })
+
+    let reply = ""
+
+    const $botMessage = addMessage('bot', "")
+
+    for await (const chunk of chunks){
+        const [choice] = chunk.choices                  //Es como const choice = chunk.choices[0] pero recupero el primer elemento y lo meto en la variable choice
+        const content = choice?.delta?.content ?? ""    //Si content es null o undefined le ponemos la cadena de texto vacio, si es cadena vacia pues la dejamos como esta
+        reply += content
+        $botMessage.textContent = reply
+    }
+    $container.scrollTop = $container.scrollHeight          //Para hacer scroll en cuanto se escribe un mensaje
+
+    //messages.push(reply.choices[0].message)
+    //addMessage('bot', reply.choices[0].message.content)
+    $button.removeAttribute('disabled')
+
+    messages.push({
+        role: 'assistant',
+        content: reply
+    })
+  }
+  
+  </script>
+
+  <script type="module">
+
+  import { CreateMLCEngine } from "https://esm.run/@mlc-ai/web-llm" 
+
+    const SELECTED_MODEL = "gemma-2b-it-q4f32_1-MLC"
+    const motor = await CreateMLCEngine(
+        SELECTED_MODEL,
+        {
+            initProgressCallback: (info) => {
+                console.log('initProgressCallback', info)
+            }
+        }
+    )
+    askAI(motor)
+
+  </script>
+
+</body>

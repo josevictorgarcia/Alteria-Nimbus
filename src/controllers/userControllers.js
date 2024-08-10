@@ -193,5 +193,14 @@ controller.updateUsageTime = async (req, res) => {
     res.end()
 }
 
+controller.getAlterAIPage = async (req, res) => {
+    let { username } = req.body
+    await connection()
+    let object = await userModels.findOne({ username : username})
+    res.render('alterAI', {
+        pfp : object.pfp
+    })
+}
+
 export default controller
 export { makeRoom, deconstructRoom }

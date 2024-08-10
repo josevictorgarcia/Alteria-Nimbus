@@ -24,7 +24,10 @@
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownmenubar" style="background-color: rgba(239, 174, 22, 1); text-align: center; width: 50vw;">
                         <li><a class="dropdown-item" onclick="reloadPage('{{username}}')" id="dropdownmenu">Chats</a></li>
-                        <li><a class="dropdown-item" href="" id="dropdownmenu">AlterAI</a></li>
+                        <form action="/alterAI" method="post">
+                            <input style="display: none;" type="text" name="username" value="{{username}}">
+                            <li><button class="dropdown-item" type="submit" id="dropdownmenu">AlterAI</button></li>
+                        </form>
                         <form action="/account" method="post">
                             <input style="display: none;" type="text" name="username" value="{{username}}">
                             <li><button class="dropdown-item" type="submit" id="dropdownmenu">My account</button></li>

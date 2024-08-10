@@ -19,4 +19,6 @@ router.post('/account', controller.getAccountPage)
 
 router.get('/updateUsageTime', controller.updateUsageTime)
 
+router.post('/alterAI', controller.getAlterAIPage)
+
 export default router
