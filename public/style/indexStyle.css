@@ -1,6 +1,7 @@
 #body {
     background: rgb(255,255,255);
     background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 51%, rgba(178,0,185,1) 100%);
+    overflow-x: hidden;
 }
 
 #logo {
@@ -26,4 +27,36 @@
     color: white;
     border-radius: 6px;
     padding: 8px;
+}
+
+.hidden {
+    display: flex; 
+    flex-direction: column ; 
+    margin-top: 90px; 
+    justify-content: center; 
+    align-items: center;
+    opacity: 0;
+    margin-right: -999px;
+    transition: all 1s;
+}
+
+.hidden2 {
+    display: flex; 
+    flex-direction: column ; 
+    margin-top: 90px; 
+    justify-content: center; 
+    align-items: center;
+    opacity: 0;
+    margin-right: 999px;
+    transition: all 2s;
+}
+
+.show {
+    display: flex; 
+    flex-direction: column ; 
+    margin-top: 90px; 
+    justify-content: center; 
+    align-items: center;
+    opacity: 1;
+    margin-right: 0vw;
 }

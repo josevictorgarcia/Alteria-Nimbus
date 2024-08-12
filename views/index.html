@@ -33,6 +33,23 @@
         </form>
     </div>
 
+    <div class="hidden">
+        <div id="title">Meet random people, make friends and have fun!</div>
+        <img src="https://cdn-icons-png.flaticon.com/512/584/584504.png" alt="" style="width: 20vw; height: 40vh;">
+    </div>
+    <div class="hidden2">
+        <div id="title">The alternative to all chat services</div>
+        <img src="https://cdn-icons-png.flaticon.com/512/496/496127.png" alt="" style="width: 20vw; height: 40vh; ">
+    </div>
+    <div class="hidden">
+        <div id="title">Privacy, anonymity and security</div>
+        <img src="https://cdn-icons-png.flaticon.com/512/6389/6389245.png" alt="" style="width: 20vw; height: 40vh;">
+    </div>
+    <div class="hidden2">
+        <div id="title">AI chatbot: Alter(AI) Nimbus</div>
+        <img src="https://www.pngall.com/wp-content/uploads/15/ChatBot-No-Background.png" alt="" style="width: 20vw; height: 40vh; ">
+    </div>
+
     <!--DATABASE-->
     <!--Username: victorgarciallorente20-->
     <!--Password: oGMeQ2nBfc2JiGBN-->
@@ -41,5 +58,25 @@
     <script type="module">
         const socket = io()
     </script>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                console.log(entry)
+                if(entry.isIntersecting){
+                    entry.target.classList.add('show')
+                } else {
+                    entry.target.classList.remove('show')
+                }
+            })
+        })
+
+        const hiddenElements = document.querySelectorAll('.hidden')
+        hiddenElements.forEach((elem) => observer.observe(elem))
+
+        const hiddenElements2 = document.querySelectorAll('.hidden2')
+        hiddenElements2.forEach((elem) => observer.observe(elem))
+    </script>
+
 </body>
 </html>
