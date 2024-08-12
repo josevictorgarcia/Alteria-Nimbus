@@ -9,7 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
 </head>
-<body id="body">
+<body id="body" onbeforeunload="scrollTop()">
     <div class="container">
         <div class="row">
             <div class="col-md-12"><img id="logo" src="img/alterianimbusTransparent.png"></div>
@@ -33,21 +33,42 @@
         </form>
     </div>
 
-    <div class="hidden">
+    <div class="hidden2">
         <div id="title">Meet random people, make friends and have fun!</div>
         <img src="https://cdn-icons-png.flaticon.com/512/584/584504.png" alt="" style="width: 20vw; height: 40vh;">
     </div>
-    <div class="hidden2">
+    <div class="hidden">
         <div id="title">The alternative to all chat services</div>
         <img src="https://cdn-icons-png.flaticon.com/512/496/496127.png" alt="" style="width: 20vw; height: 40vh; ">
     </div>
-    <div class="hidden">
+    <div class="hidden2">
         <div id="title">Privacy, anonymity and security</div>
         <img src="https://cdn-icons-png.flaticon.com/512/6389/6389245.png" alt="" style="width: 20vw; height: 40vh;">
     </div>
-    <div class="hidden2">
+    <div class="hidden">
         <div id="title">AI chatbot: Alter(AI) Nimbus</div>
         <img src="https://www.pngall.com/wp-content/uploads/15/ChatBot-No-Background.png" alt="" style="width: 20vw; height: 40vh; ">
+    </div>
+
+    <div style="margin-top: 90px; text-align: center;">What are you waiting for? Take a glance!</div>
+
+    <div class="picture">
+        <div class="hidden2" style="width: 50vw;">Picture 1</div>
+        <img class="hidden" src="img/index1.png" alt="" style="max-width: 50vw;">
+    </div>
+    <div class="picture2">
+        <img class="hidden2" src="img/index2.png" alt="" style="max-width: 50vw;">
+        <div class="hidden" style="width: 50vw;">Picture 2</div>
+    </div>
+    <div class="picture">
+        <div class="hidden2" style="width: 50vw;">Picture 1</div>
+        <img class="hidden" src="img/alterAIAvatar.png" alt="" style="max-width: 50vw;">
+    </div>
+
+    <div class="reviews">
+        <div class="review hidden">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis architecto provident commodi sunt quas, deleniti pariatur animi voluptate at dicta debitis esse beatae vero! Doloremque, similique molestias? Nemo, temporibus quos!</div>
+        <div class="review hidden">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis architecto provident commodi sunt quas, deleniti pariatur animi voluptate at dicta debitis esse beatae vero! Doloremque, similique molestias? Nemo, temporibus quos!</div>
+        <div class="review hidden">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis architecto provident commodi sunt quas, deleniti pariatur animi voluptate at dicta debitis esse beatae vero! Doloremque, similique molestias? Nemo, temporibus quos!</div>
     </div>
 
     <!--DATABASE-->
@@ -59,7 +80,14 @@
         const socket = io()
     </script>
 
-    <script>
+    <script> 
+         // This prevents the page from scrolling down to where it was previously.
+        if ('scrollRestoration' in history) {
+            history.scrollRestoration = 'manual';
+        }
+        // This is needed if the user scrolls down during page load and you want to make sure the page is scrolled to the top once it's fully loaded. This has Cross-browser support.
+        window.scrollTo(0,0);
+
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 console.log(entry)
