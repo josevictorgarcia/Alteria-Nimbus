@@ -6,6 +6,11 @@
     <link rel="stylesheet" type="text/css" href="style/indexStyle.css">
     <title>Alteria Nimbus</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Indie+Flower&family=Lexend:wght@100..900&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
 </head>
@@ -33,42 +38,75 @@
         </form>
     </div>
 
-    <div class="hidden2">
-        <div id="title">Meet random people, make friends and have fun!</div>
-        <img src="https://cdn-icons-png.flaticon.com/512/584/584504.png" alt="" style="width: 20vw; height: 40vh;">
-    </div>
-    <div class="hidden">
-        <div id="title">The alternative to all chat services</div>
-        <img src="https://cdn-icons-png.flaticon.com/512/496/496127.png" alt="" style="width: 20vw; height: 40vh; ">
-    </div>
-    <div class="hidden2">
-        <div id="title">Privacy, anonymity and security</div>
-        <img src="https://cdn-icons-png.flaticon.com/512/6389/6389245.png" alt="" style="width: 20vw; height: 40vh;">
-    </div>
-    <div class="hidden">
-        <div id="title">AI chatbot: Alter(AI) Nimbus</div>
-        <img src="https://www.pngall.com/wp-content/uploads/15/ChatBot-No-Background.png" alt="" style="width: 20vw; height: 40vh; ">
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+        <div class="hidden2">
+            <div style="display: flex; flex-direction: column; justify-content: center;">
+                <div id="title">Meet random people, make friends and have fun!</div>
+                <div id="text">Try our free online chat to connect with people all around the world, find common interests you may have with them and add your own friends to stay in touch!</div>
+            </div>
+            <img src="img/hidden1.png" alt="" style="max-width: 70vw; max-height: 70vh;">
+        </div>
+        <div class="hidden">
+            <div style="display: flex; flex-direction: column; justify-content: center;">
+                <div id="title">The alternative to all chat services</div>
+                <div id="text">Explore our new and interactive web page: from rooms that connect you with loads of people to private and more intimate chats. Add as many friends as you want, build meaningful friendships or long-lasting relationships.</div>
+            </div>
+            <img src="img/hidden2.png" alt="" style="max-width: 70vw; max-height: 70vh;">
+        </div>
+        <div class="hidden2">
+            <div style="display: flex; flex-direction: column; justify-content: center;">
+                <div id="title">Privacy, anonymity and security</div>
+                <div id="text">Your safety is a priority. Data processing here is different than other chat apps. We don't share your private information with third parties and measures can be taken to keep the chats clean if needed</div>
+            </div>
+            <img src="img/hidden3.png" alt="" style="max-width: 70vw; max-height: 70vh;">
+        </div>
+        <div class="hidden">
+            <div>
+                <div id="title">AI chatbot: Alter(AI) Nimbus</div>
+                <div id="text">Free AI chatbot can help you get answers to your questions. It's easy to try and use, but it can sometimes give you weird answers so don't trust it 100% &#128521. Either way, we're trying to improve our AI services but for now, hope you have fun with it!</div>
+            </div>
+            <img src="img/hidden4.png" alt="" style="max-width: 70vw; max-height: 70vh;">
+        </div>
     </div>
 
-    <div style="margin-top: 90px; text-align: center;">What are you waiting for? Take a glance!</div>
+    <div id="title" style="margin-top: 90px; text-align: center;">What are you waiting for? Take a glance!</div>
 
     <div class="picture">
-        <div class="hidden2" style="width: 50vw;">Picture 1</div>
+        <div class="hidden2" style="width: 50vw;">
+            <div id="title2">Chat with random strangers</div>
+            <div id="text">Add interests, find people with similar interests and hobbies, join rooms, meet groups of people, share meaningful text messages, fun conversations and much more. It's that easy and free!</div>
+        </div>
         <img class="hidden" src="img/index1.png" alt="" style="max-width: 50vw;">
     </div>
     <div class="picture2">
         <img class="hidden2" src="img/index2.png" alt="" style="width: 50vw;">
-        <div class="hidden" style="max-width: 50vw;">Picture 2</div>
+        <div class="hidden" style="max-width: 50vw;">
+            <div id="title2">Set up your own profile and compete with other users</div>
+            <div id="text">We appreciate the time you spend here. Check out the ranking based on your personal stats (time you spend, number of friends...) and stay tuned for rewards!</div>
+        </div>
     </div>
     <div class="picture">
-        <div class="hidden2" style="width: 50vw;">Picture 3</div>
+        <div class="hidden2" style="width: 50vw;">
+            <div id="title2">Alter AI Nimbus</div>
+            <div id="text">Try me out!</div>
+        </div>
         <img class="hidden" src="img/index3.png" alt="" style="max-width: 50vw;">
     </div>
 
-    <div class="reviews">
-        <div class="review hidden" style="background-image: url('img/bocadillo.png'); background-repeat: no-repeat; background-size: contain;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis architecto provident commodi sunt quas, deleniti pariatur animi voluptate at dicta debitis esse beatae vero! Doloremque, similique molestias? Nemo, temporibus quos!</div>
-        <div class="review hidden" style="background-image: url('img/bocadillo2.png'); background-repeat: no-repeat; background-size: contain;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis architecto provident commodi sunt quas, deleniti pariatur animi voluptate at dicta debitis esse beatae vero! Doloremque, similique molestias? Nemo, temporibus quos!</div>
-        <div class="review hidden" style="background-image: url('img/bocadillo.png'); background-repeat: no-repeat; background-size: contain;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis architecto provident commodi sunt quas, deleniti pariatur animi voluptate at dicta debitis esse beatae vero! Doloremque, similique molestias? Nemo, temporibus quos!</div>
+    <div id="title" style="margin-top: 60px;">Reviews:</div>
+    <div class="reviews row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+        <div class="review hidden" style="background-image: url('img/bocadillo.png'); background-repeat: no-repeat; background-size: contain;">
+            <div id="text" style="width: 350px; margin: 30px;">I loved the idea of having chat rooms and at the same time the possibility of talking to a random stranger. No need to sign up or log in. The web page design is pretty cool too</div>
+        </div>
+        <div class="review hidden" style="background-image: url('img/bocadillo2.png'); background-repeat: no-repeat; background-size: contain;">
+            <div id="text" style="width: 350px; margin: 30px;">I set up my own profile and shared my username with a few friends and now we use this to chat. We all like the idea of keeping our chats and data safe, which big chat apps don't do</div>
+        </div>
+        <div class="review hidden" style="background-image: url('img/bocadillo.png'); background-repeat: no-repeat; background-size: contain;">
+            <div id="text" style="width: 350px; margin: 30px;">Even though the AI chat takes a little while to load and the answers are simple, I find that a great initiative and I'm pretty impressed about how complete this chat service is. I also tried the rooms and random chat, I think it's great for meeting random strangers. Definitely the web chat apps have a new competitor</div>
+        </div>
+        <div class="review hidden" style="background-image: url('img/bocadillo2.png'); background-repeat: no-repeat; background-size: contain;">
+            <div id="text" style="width: 350px; margin: 30px;">This is such a great app. Especially for shy people like me who struggle to make friends. Meeting people was never this easy!</div>
+        </div>
     </div>
 
     <!--DATABASE-->

@@ -40,6 +40,7 @@
     position: relative;
     left: 30vw;
     transition: all 1s;
+    max-width: 70vw;
 }
 
 .hidden2 {
@@ -49,8 +50,10 @@
     justify-content: center; 
     align-items: center;
     opacity: 0;
-    margin-right: 999px;
+    width: 100%;
+    position: relative;
     transition: all 2s;
+    max-width: 70vw;
 }
 
 .show {
@@ -61,7 +64,6 @@
     align-items: center;
     opacity: 1;
     left: 0vw;
-    margin-right: 0vw;
 }
 
 .picture { 
@@ -94,8 +96,14 @@
 .review {
     color: rgb(70, 126, 255);
     background: rgba(19, 0, 232, 0.7);
-    width: 30vw;
-    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    min-width: 420px;
+    min-height: 400px;
+    width: 420px;
+    height: 400px;
     margin: 10px;
     border-radius: 6px;
     overflow: scroll;
@@ -107,4 +115,29 @@
 
 .review:nth-child(3){
     transition-delay: 400ms;
+}
+
+.review:nth-child(4){
+    transition-delay: 600ms;
+}
+
+#title {
+    font-family: Dela Gothic One;
+    font-size: 40px;
+    font-style: normal;
+    justify-content: center;
+    text-align: center;
+}
+
+#title2 {
+    font-family: "Indie Flower";
+    font-size: 40px;
+}
+
+#text {
+    margin-top: 30px;
+    font-family: "Manrope", sans-serif;
+    font-size: 20px;
+    justify-content: center;
+    text-align: center;
 }
