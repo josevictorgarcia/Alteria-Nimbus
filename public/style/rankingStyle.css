@@ -1,0 +1,65 @@
+#body {
+    height: 100px;
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 51%, rgba(178,0,185,1) 100%);
+    overflow-x: hidden;
+}
+
+#logo {
+    position: absolute;
+    width: 30%;
+    bottom: 0;
+    z-index: 0;
+}
+
+#dropdown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#dropdownMenuBar {
+    background-color: blueviolet;
+}
+
+#dropdownMenuBar:hover {
+    background-color: transparent;
+}
+
+#dropdownMenu {
+    width: 70vw;
+    text-align: center;
+    background-color: rgba(239, 174, 22, 1);
+}
+
+#ranking {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+#position {
+    color: rgba(239, 174, 22, 1);
+    width: 70vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: blueviolet;
+    overflow-x: scroll;
+}
+
+#field {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin: 1vw;
+}
+
+#avatar {
+    width:  50px;
+    height: 50px;
+    border-radius: 50%;
+}

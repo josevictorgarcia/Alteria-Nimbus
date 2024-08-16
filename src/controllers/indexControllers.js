@@ -25,4 +25,10 @@ controller.getRandomPage = (req, res) => {
     })
 }
 
+controller.getRankingPage = (req, res) => {
+    res.render('ranking', {
+        
+    })
+}
+
 export default controller
