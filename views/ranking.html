@@ -20,14 +20,13 @@
     <div id="dropdown">
         <div class="d-grid gap-" style="min-width: 70vw;">
             <button id="dropdownMenuBar" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <a style="color: rgba(239, 174, 22, 1);;">Overall Ranking</a>
+                <a>{{option}} Ranking</a>
             </button>
             <ul id="dropdownMenu" class="dropdown-menu" aria-labelledby="dropdownmenubar">
-                <li><a class="dropdown-item" href="index.html" id="dropdownmenu">Overall</a>
-                </li>
-                <li><a class="dropdown-item" href="index.html" id="dropdownmenu">Popularity</a></li>
-                <li><a class="dropdown-item" href="index.html" id="dropdownmenu">Loyalty</a></li>
-                <li><a class="dropdown-item" href="index.html" id="dropdownmenu">Social</a>
+                <li><a class="dropdown-item" id="dropdownmenu" onclick="overallRanking()">Overall</a></li>
+                <li><a class="dropdown-item" id="dropdownmenu" onclick="popularityRanking()">Popularity</a></li>
+                <li><a class="dropdown-item" id="dropdownmenu" onclick="loyaltyRanking()">Loyalty</a></li>
+                <li><a class="dropdown-item" id="dropdownmenu" onclick="socialRanking()">Social</a>
                 </li>
             </ul>
         </div>
@@ -35,33 +34,51 @@
 
     <div id="ranking">
 
+        {{#ranking}}
         <div id="position">
-            <div id="field">1.</div>
-            <div id="field"><img id="avatar" src="img/alterianimbus.png" alt=""></div>
+            <div id="field">{{position}}.</div>
+            <div id="field"><img id="avatar" src="{{pfp}}" alt=""></div>
             <div style="display: flex; justify-content: center; width: 100%;">
-                <div style="width: 50%; display: flex; justify-content: center; overflow-x: scroll;"><div id="username">Antonio</div></div>
-                <div style="width: 50%; display: flex; justify-content: center; overflow-x: scroll;"><div id="points">1000</div></div>
+                <div style="width: 50%; display: flex; justify-content: center; overflow-x: scroll;"><div id="username">{{username}}</div></div>
+                <div style="width: 50%; display: flex; justify-content: center; overflow-x: scroll;"><div id="points">{{score}}</div></div>
             </div>
         </div>
-
-        <div id="position">
-            <div id="field">2.</div>
-            <div id="field"><img id="avatar" src="img/alterianimbus.png" alt=""></div>
-            <div style="display: flex; justify-content: center; width: 100%;">
-                <div style="width: 50%; display: flex; justify-content: center; overflow-x: scroll;"><div id="username">AntonomasioPollero2</div></div>
-                <div style="width: 50%; display: flex; justify-content: center; overflow-x: scroll;"><div id="points">1000</div></div>
-            </div>
-        </div>
-
-        <div id="position">
-            <div id="field">3.</div>
-            <div id="field"><img id="avatar" src="img/alterianimbus.png" alt=""></div>
-            <div style="display: flex; justify-content: center; width: 100%;">
-                <div id="field" style="width: 50%; display: flex; justify-content: center; overflow-x: scroll;"><div id="username">DelocosRebollos444</div></div>
-                <div id="field" style="width: 50%; display: flex; justify-content: center; overflow-x: scroll;"><div id="points">444</div></div>
-            </div>
-        </div>
+        {{/ranking}}
 
     </div>
+
+    <script>
+        async function overallRanking(){
+            const response = await fetch(`/ranking`)
+            const newHtml = await response.text()
+
+            const ventanaNuevoElem = document.getElementById("body")
+            ventanaNuevoElem.innerHTML = newHtml
+        }
+
+        async function popularityRanking(){
+            const response = await fetch(`/popularityRanking`)
+            const newHtml = await response.text()
+
+            const ventanaNuevoElem = document.getElementById("body")
+            ventanaNuevoElem.innerHTML = newHtml
+        }
+
+        async function loyaltyRanking(){
+            const response = await fetch(`/loyaltyRanking`)
+            const newHtml = await response.text()
+
+            const ventanaNuevoElem = document.getElementById("body")
+            ventanaNuevoElem.innerHTML = newHtml
+        }
+
+        async function socialRanking(){
+            const response = await fetch(`/socialRanking`)
+            const newHtml = await response.text()
+
+            const ventanaNuevoElem = document.getElementById("body")
+            ventanaNuevoElem.innerHTML = newHtml
+        }
+    </script>
 
 </body>

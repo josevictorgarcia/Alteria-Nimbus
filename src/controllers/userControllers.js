@@ -203,4 +203,4 @@ controller.getAlterAIPage = async (req, res) => {
 }
 
 export default controller
-export { makeRoom, deconstructRoom }
+export { makeRoom, deconstructRoom, getNumMessages }
