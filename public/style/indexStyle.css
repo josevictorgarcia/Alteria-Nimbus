@@ -39,7 +39,7 @@
     width: 100%;
     position: relative;
     left: 30vw;
-    transition: all 1s;
+    transition: all 1.5s;
     max-width: 70vw;
 }
 
@@ -52,7 +52,8 @@
     opacity: 0;
     width: 100%;
     position: relative;
-    transition: all 2s;
+    left: -30vw;
+    transition: all 1.5s;
     max-width: 70vw;
 }
 
@@ -80,7 +81,6 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    margin-right: 999px;
     width: 100vw;
     max-height: 100vh;
 }
@@ -91,6 +91,7 @@
     margin-top: 90px;
     justify-content: center;
     align-items: center;
+    max-width: 100vw;
 }
 
 .review {
