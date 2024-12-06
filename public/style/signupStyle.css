@@ -7,7 +7,7 @@
     width: 30%;
 }
 
-#button {
+.button {
     width: 75px;
     background: rgb(192, 113, 248);
     border-width: 1px;
@@ -17,10 +17,20 @@
     padding: 8px;
 }
 
-#input {
-    width: 50%;
+/*Moviles y tablets*/
+@media (width <= 768px){
+    .input {
+        width: 100%;
+    }
 }
 
-#message {
+/*Ordenadores y pantallas grandes*/
+@media (width > 768px){
+    .input {
+        width: 50%;
+    }
+}
+
+.message {
     color: red;
 }
