@@ -1,10 +1,3 @@
-#body {
-    height: 100px;
-    background: rgb(255,255,255);
-    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 51%, rgba(178,0,185,1) 100%);
-    overflow: hidden;
-}
-
 #logo {
     position: absolute;
     width: 30%;
@@ -14,15 +7,6 @@
 
 #menu {
     padding-left: 0px;
-}
-
-#menu:hover {
-    width: 50vw;
-    height: max-content;
-    min-height: 100%;
-    position: absolute;
-    overflow: scroll;
-    z-index: 2;
 }
 
 #menuicon {
@@ -36,23 +20,74 @@
     width: 0px;
 }
 
-#desplegable {
-    width: 0vw;
-    height: max-content;
-    min-height: 100%;
-    visibility: hidden;
-    position: absolute;
-    z-index: -1;
+@media (width <= 768px){
+    #body {
+        height: 100vh;
+        background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 51%, rgba(178,0,185,1) 100%);
+        overflow: hidden;
+    }
+
+    #menu:hover {
+        height: 50vh;
+        width: 100vw;
+        position: absolute;
+        overflow: scroll;
+        z-index: 2;
+    }
+
+    #desplegable {
+        height: 0vh;
+        width: 100%;
+        visibility: hidden;
+        position: absolute;
+        overflow: scroll;
+        z-index: -1;
+    }
+
+    #menu:hover #desplegable{
+        height: 50vh;
+        background: linear-gradient(to bottom, rgb(21, 6, 186) 0%, rgb(6, 101, 253) 51%, rgb(255, 255, 255) 100%);
+        color: white;
+        visibility: visible;
+        position: absolute;
+        z-index: 0;
+        transition: 1s;
+    }
 }
 
-#menu:hover #desplegable{
-    width: 50vw;
-    background: linear-gradient(90deg, rgb(21, 6, 186) 0%, rgb(6, 101, 253) 51%, rgb(255, 255, 255) 100%);
-    color: white;
-    visibility: visible;
-    position: absolute;
-    z-index: 0;
-    transition: 1s;
+@media (width > 768px){
+    #body {
+        height: 100vh;
+        background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 51%, rgba(178,0,185,1) 100%);
+        overflow: hidden;
+    }
+
+    #menu:hover {
+        width: 50vw;
+        height: 100vh;
+        min-height: 100%;
+        position: absolute;
+        overflow: scroll;
+        z-index: 2;
+    }
+
+    #desplegable {
+        width: 0vw;
+        height: 100%;
+        visibility: hidden;
+        position: absolute;
+        z-index: -1;
+    }
+
+    #menu:hover #desplegable{
+        width: 50vw;
+        background: linear-gradient(90deg, rgb(21, 6, 186) 0%, rgb(6, 101, 253) 51%, rgb(255, 255, 255) 100%);
+        color: white;
+        visibility: visible;
+        position: absolute;
+        z-index: 0;
+        transition: 1s;
+    }
 }
 
 #chat {
@@ -85,22 +120,25 @@
 #addFriend {
     align-items: center;
     display: none;
-    margin-left: 30px;
+    justify-content: center;
+    margin: 5%;
+    margin-top: 0;
 }
 
 #button2 {
-    width: 50%;
-    height: 40px;
+    width: 30%;
+    height: 60px;
     background: rgb(192, 113, 248);
     border-width: 1px;
     border-color: white;
     color: white;
     border-radius: 6px;
+    padding: 0;
 }
 
 #friend {
-    width: 50%;
-    height: 40px;
+    width: 70%;
+    height: 60px;
     border-radius: 6px;
 }
 

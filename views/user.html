@@ -17,12 +17,12 @@
 
         <div id="desplegable">
             <!--Dropdown-->
-            <div class="col-md-3">
+            <div class="col-md-3" style="width: 100%;">
                 <div class="d-grid gap-">
-                    <button style="width: 50vw;" id="dropdownmenubar" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <a id="option" style="color: rgba(239, 174, 22, 1); width: 50vw;">{{option}}</a>
+                    <button id="dropdownmenubar" type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a id="option" style="color: rgba(239, 174, 22, 1); width: 100%;">{{option}}</a>
                     </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownmenubar" style="background-color: rgba(239, 174, 22, 1); text-align: center; width: 50vw;">
+                    <ul class="dropdown-menu" aria-labelledby="dropdownmenubar" style="background-color: rgba(239, 174, 22, 1); text-align: center; width: 100%;">
                         <li><a class="dropdown-item" onclick="reloadPage('{{username}}')" id="dropdownmenu">Chats</a></li>
                         <form action="/alterAI" method="post">
                             <input style="display: none;" type="text" name="username" value="{{username}}">
@@ -79,7 +79,7 @@
 
         async function addChat(){
             document.getElementById('button').style.display = "none"
-            document.getElementById('addFriend').style.display = "block"
+            document.getElementById('addFriend').style.display = "flex"
         }
 
         async function addFriend(username){
