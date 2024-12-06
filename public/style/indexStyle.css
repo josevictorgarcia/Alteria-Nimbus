@@ -1,5 +1,4 @@
 #body {
-    background: rgb(255,255,255);
     background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 51%, rgba(178,0,185,1) 100%);
     overflow-x: hidden;
 }
@@ -8,7 +7,7 @@
     width: 30%;
 }
 
-#button {
+.button {
     width: 100%;
     background: rgb(192, 113, 248);
     border-width: 1px;
@@ -18,15 +17,8 @@
     padding: 8px;
 }
 
-#button2 {
-    width: 100%;
+.button1 {
     height: 100px;
-    background: rgb(192, 113, 248);
-    border-width: 1px;
-    border-color: white;
-    color: white;
-    border-radius: 6px;
-    padding: 8px;
 }
 
 .hidden {
@@ -38,23 +30,16 @@
     opacity: 0; 
     width: 100%;
     position: relative;
-    left: 30vw;
     transition: all 1.5s;
     max-width: 70vw;
 }
 
+.hidden1{
+    left: 30vw;
+}
+
 .hidden2 {
-    display: flex; 
-    flex-direction: column ; 
-    margin-top: 90px; 
-    justify-content: center; 
-    align-items: center;
-    opacity: 0;
-    width: 100%;
-    position: relative;
     left: -30vw;
-    transition: all 1.5s;
-    max-width: 70vw;
 }
 
 .show {
@@ -68,15 +53,6 @@
 }
 
 .picture { 
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    width: 100vw;
-    max-height: 100vh;
-}
-
-.picture2 { 
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -110,19 +86,7 @@
     overflow: scroll;
 }
 
-.review:nth-child(2){
-    transition-delay: 200ms;
-}
-
-.review:nth-child(3){
-    transition-delay: 400ms;
-}
-
-.review:nth-child(4){
-    transition-delay: 600ms;
-}
-
-#title {
+.title {
     font-family: Dela Gothic One;
     font-size: 40px;
     font-style: normal;
@@ -130,12 +94,11 @@
     text-align: center;
 }
 
-#title2 {
+.title2 {
     font-family: "Indie Flower";
-    font-size: 40px;
 }
 
-#text {
+.text {
     margin-top: 30px;
     font-family: "Manrope", sans-serif;
     font-size: 20px;
