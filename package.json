@@ -8,8 +8,6 @@
   },
   "dependencies": {
     "express": "^4.18.2",
-    "firebase": "^11.0.2",
-    "firebaseui": "^6.1.0",
     "http": "^0.0.1-security",
     "mongodb": "^6.7.0",
     "mongoose": "^8.4.4",
