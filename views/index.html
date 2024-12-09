@@ -110,6 +110,8 @@
         </div>
     </div>
 
+    <button id="google-signin-btn">Iniciar sesión con Google</button>
+
     <!--DATABASE-->
     <!--Username: victorgarciallorente20-->
     <!--Password: oGMeQ2nBfc2JiGBN-->
@@ -117,6 +119,99 @@
 
     <script type="module">
         const socket = io()
+    </script>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
+        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyBSplSIL3OWKWhxHRgYCVasD5xYxvRDOIA",
+            authDomain: "alteria-nimbus.firebaseapp.com",
+            projectId: "alteria-nimbus",
+            storageBucket: "alteria-nimbus.firebasestorage.app",
+            messagingSenderId: "635680300163",
+            appId: "1:635680300163:web:9400faa4e6b32a96464fb6",
+            measurementId: "G-T2PZJFKS5S"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app)
+
+        const googleProvider = new GoogleAuthProvider();
+
+        document.getElementById('google-signin-btn').addEventListener('click', () => {
+            signInWithPopup(auth, googleProvider)
+            .then((result) => {
+                // El usuario ha iniciado sesión correctamente
+                const user = result.user;
+                console.log('Usuario autenticado: ', user);
+            })
+            .catch((error) => {
+                // Manejo de errores
+                console.error('Error en el inicio de sesión con Google: ', error);
+            });
+        });
+
+
+        /*
+        //Haciendo npm install firebase
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "firebase/app";
+        import { getAnalytics } from "firebase/analytics";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyBSplSIL3OWKWhxHRgYCVasD5xYxvRDOIA",
+          authDomain: "alteria-nimbus.firebaseapp.com",
+          projectId: "alteria-nimbus",
+          storageBucket: "alteria-nimbus.firebasestorage.app",
+          messagingSenderId: "635680300163",
+          appId: "1:635680300163:web:9400faa4e6b32a96464fb6",
+          measurementId: "G-T2PZJFKS5S"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        */
+
+        /*
+        //Para etiqueta <script> en la parte inferior de la etiqueta body
+        <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyBSplSIL3OWKWhxHRgYCVasD5xYxvRDOIA",
+            authDomain: "alteria-nimbus.firebaseapp.com",
+            projectId: "alteria-nimbus",
+            storageBucket: "alteria-nimbus.firebasestorage.app",
+            messagingSenderId: "635680300163",
+            appId: "1:635680300163:web:9400faa4e6b32a96464fb6",
+            measurementId: "G-T2PZJFKS5S"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        */
     </script>
 
     <script> 
