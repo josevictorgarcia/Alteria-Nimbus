@@ -17,22 +17,35 @@
 </head>
 <body id="body" >
     <div class="container">
-        <div class="row">
-            <div class="col-md-12"><img id="logo" src="img/alterianimbusTransparent.png"></div>
+        <div style="display: flex; flex-direction: row; justify-content: space-between; align-items: center;">
+            <img id="logo" src="img/alterianimbusTransparent.png">
+            <div id="userProfile">
+                <img id="pfp" src="img/alterAIAvatar.png" alt="">
+                <div class="dropdown">
+                    <button id="username" class="button dropdownButton">My profile</button>
+                    <div class="dropdown-content">
+                      <a href="#">Chats</a>
+                      <a href="#">AlterAI</a>
+                      <a href="#">My account</a>
+                      <a id="sign-out-link" href="/">Sign out</a>
+                    </div>
+                  </div>
+            </div> 
         </div>
         <form method="get">
             <div class="row">
                 <div class="col-md-3"><button class="button">Home</button></div>
                 <div class="col-md-3"><button formaction="/ranking" class="button">Ranking</button></div>
                 <!--<div class="col-md-3"><button formaction="/login" class="button">Login/Sign Up</button></div>-->
-                <div class="col-md-3"><button type="button" onclick="displayLoginPanel()" class="button">Login/Sign Up</button></div>
                 <div class="col-md-3"><button class="button">About</button></div>
+                <div class="col-md-3"><button id="loginButton" type="button" onclick="displayLoginPanel()" class="button">Login/Sign Up</button></div>
             </div>
         </form>
     </div>
 
     <div id="backgroundLogin">
         <div id="loginPanel">
+            <button class="button closeButton" style="width: 40px; height: 40px;" onclick="hideLoginPanel()">X</button>
             <div class="title" style="color: white; font-size: 30px;">Login</div>
             <form method="get">
                 <button formaction="/login" class="button" style="width: 60vw; margin-top: 5vh; margin-left: 5%; min-width: 181.38px;">Alteria Nimbus</button>
@@ -149,7 +162,7 @@
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-analytics.js";
-        import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"
+        import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js"
         // TODO: Add SDKs for Firebase products that you want to use
         // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -177,13 +190,43 @@
             .then((result) => {
                 // El usuario ha iniciado sesión correctamente
                 const user = result.user;
-                console.log('Usuario autenticado: ', user);
+                console.log('Usuario autenticado: ', auth);
+                hideLoginPanel()
+                document.getElementById('username').innerHTML = auth.currentUser.displayName
+                document.getElementById('pfp').src = auth.currentUser.photoURL
             })
             .catch((error) => {
                 // Manejo de errores
                 console.error('Error en el inicio de sesión con Google: ', error);
             });
         });
+
+        // Handle sign-out
+        document.getElementById('sign-out-link').addEventListener('click', function(event) {
+            event.preventDefault();  // Prevent default anchor behavior
+
+            // Sign out the user
+            signOut(auth).then(function() {                                     //Cierra sesión con Firebase
+                console.log("User signed out", auth);
+                // Optionally, redirect the user to the login page or home page
+                window.location.href = 'https://accounts.google.com/Logout'     //Imprescindible para cerrar sesión con google
+                //window.location.href = '/';  // Redirect to main page
+            }).catch(function(error) {
+                console.error("Error signing out: ", error);
+            });
+        });
+
+        onAuthStateChanged(auth, (user) => {
+            if(user){
+                document.getElementById("loginButton").style.display = 'none'
+                document.getElementById("userProfile").style.display = 'flex'
+                document.getElementById('username').innerHTML = auth.currentUser.displayName
+                document.getElementById('pfp').src = auth.currentUser.photoURL
+            } else {
+                document.getElementById("loginButton").style.display = 'inline-block'   //Inline block como sus homólogos los otros botones
+                document.getElementById("userProfile").style.display = 'none'
+            }
+        })
 
 
         /*
@@ -270,7 +313,13 @@
             backgroundLogin.style.visibility = 'visible'
             backgroundLogin.style.opacity = 1
             backgroundLogin.style.transitionDuration = '2s'
-            console.log("mayopolla")
+        }
+
+        async function hideLoginPanel(){
+            let backgroundLogin = document.getElementById("backgroundLogin")
+            backgroundLogin.style.visibility = 'hidden'
+            backgroundLogin.style.opacity = 0
+            backgroundLogin.style.transitionDuration = '0.5s'
         }
     </script>
 
