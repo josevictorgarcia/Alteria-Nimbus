@@ -7,4 +7,6 @@ router.post('/submitloginform', controller.login)
 
 router.get('/signup', controller.getSignUpPage)
 
+router.get('/loginGoogle', controller.loginGoogle)
+
 export default router

@@ -8,7 +8,8 @@ const userSchema = new Schema ({
     usageTime: Number,
     signupDate: Date,
     loginDate: Date,
-    pfp : String
+    pfp : String,
+    provider: String
 })
 
 const userModels = mongoose.model('users', userSchema)

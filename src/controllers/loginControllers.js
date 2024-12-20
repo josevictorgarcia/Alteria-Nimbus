@@ -21,9 +21,9 @@ async function getFriendsAndPictures(object){
     return friendsAndPictures
 }
 
-controller.login = async (req, res) => {//cambiar el html pulsar boton login
+controller.login = async (req, res) => {        //cambiar el html pulsar boton login
     await connection()
-    //const users = await userModels.find()   //Si da error timeout 10000ms comprobar direcciones ip que tienen acceso a la base de datos (mongodb.com-->security-->network access)
+    //const users = await userModels.find()     //Si da error timeout 10000ms comprobar direcciones ip que tienen acceso a la base de datos (mongodb.com-->security-->network access)
     //console.log(users)
     let { username, password } = req.body
     const object = await userModels.findOne({ username : username, password : password })
@@ -42,6 +42,18 @@ controller.login = async (req, res) => {//cambiar el html pulsar boton login
             friendsAndPictures : friendsAndPictures
         })
     }
+}
+
+
+controller.loginGoogle = async(req, res) => {
+    await connection()
+    const object = await userModels.findOne({ username : req.query.username })
+    if(object === null){    //Si no existe lo añadimos a la BBDD
+        await userModels.create({ username : req.query.username, password : null, friends : [], usageTime : 0, signupDate : new Date(), loginDate : new Date() , pfp : req.query.pfp, provider: 'google'}) //Anadimos el usuario a la base de datos
+    } else {                //Si existe lo actualizamos
+        await  userModels.updateOne({ username : req.query.username }, { $set : {loginDate : new Date(), pfp : req.query.pfp} })
+    }
+    res.end()
 }
 
 export default controller

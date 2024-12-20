@@ -24,10 +24,19 @@
                 <div class="dropdown">
                     <button id="username" class="button dropdownButton">My profile</button>
                     <div class="dropdown-content">
-                      <a href="#">Chats</a>
-                      <a href="#">AlterAI</a>
-                      <a href="#">My account</a>
-                      <a id="sign-out-link" href="/">Sign out</a>
+                        <form action="/submitloginform" method="post">
+                            <input id="chats" style="display: none;" type="text" name="username" value="{{username}}">
+                            <button class="dropdown-item" type="submit" id="dropdownmenu">Chats</button>
+                        </form>
+                        <form action="/alterAI" method="post">
+                            <input id="alterAI" style="display: none;" type="text" name="username">
+                            <button class="dropdown-item" type="submit" id="dropdownmenu">AlterAI</button>
+                        </form>
+                        <form action="/account" method="post">
+                            <input id="account" style="display: none;" type="text" name="username">
+                            <button class="dropdown-item" type="submit">My account</button>
+                        </form>
+                        <a id="sign-out-link" href="/">Sign out</a>
                     </div>
                   </div>
             </div> 
@@ -187,13 +196,14 @@
 
         document.getElementById('google-signin-btn').addEventListener('click', () => {
             signInWithPopup(auth, googleProvider)
-            .then((result) => {
+            .then(async (result) => {
                 // El usuario ha iniciado sesión correctamente
                 const user = result.user;
                 console.log('Usuario autenticado: ', auth);
                 hideLoginPanel()
                 document.getElementById('username').innerHTML = auth.currentUser.displayName
                 document.getElementById('pfp').src = auth.currentUser.photoURL
+                await fetch(`/loginGoogle?username=${auth.currentUser.email}&pfp=${auth.currentUser.photoURL}`)
             })
             .catch((error) => {
                 // Manejo de errores
@@ -222,13 +232,17 @@
                 document.getElementById("userProfile").style.display = 'flex'
                 document.getElementById('username').innerHTML = auth.currentUser.displayName
                 document.getElementById('pfp').src = auth.currentUser.photoURL
+                document.getElementById('chats').value = auth.currentUser.email
+                document.getElementById('alterAI').value = auth.currentUser.email
+                document.getElementById('account').value = auth.currentUser.email
             } else {
                 document.getElementById("loginButton").style.display = 'inline-block'   //Inline block como sus homólogos los otros botones
                 document.getElementById("userProfile").style.display = 'none'
+                document.getElementById('chats').value = ''
+                document.getElementById('alterAI').value = ''
+                document.getElementById('account').value = ''
             }
         })
-
-
         /*
         //Haciendo npm install firebase
         // Import the functions you need from the SDKs you need
