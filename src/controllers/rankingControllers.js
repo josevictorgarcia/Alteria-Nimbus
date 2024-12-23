@@ -10,7 +10,7 @@ controller.getPopularityRanking = async (req, res) => {
     let ranking = []
     for(let i=0; i<users.length; i++){
         let score = users[i].friends.length
-        ranking.push( {position : i, pfp : users[i].pfp, username : users[i].username, score : score} )
+        ranking.push( {position : i, pfp : users[i].pfp, name : users[i].name, score : score} )
     }
     ranking.sort((a, b) => b.score - a.score)
     for(let i=0; i<ranking.length; i++){
@@ -28,7 +28,7 @@ controller.getLoyaltyRanking = async (req, res) => {
     let ranking = []
     for(let i=0; i<users.length; i++){
         let score = users[i].usageTime
-        ranking.push( {position : i, pfp : users[i].pfp, username : users[i].username, score : score} )
+        ranking.push( {position : i, pfp : users[i].pfp, name : users[i].name, score : score} )
     }
     ranking.sort((a, b) => b.score - a.score)
     for(let i=0; i<ranking.length; i++){
@@ -47,7 +47,7 @@ controller.getSocialRanking = async (req, res) => {
     for(let i=0; i<users.length; i++){
         let { bestFriend, totalMessages } = await getNumMessages(users[i].username)
         let score = totalMessages
-        ranking.push( {position : i, pfp : users[i].pfp, username : users[i].username, score : score} )
+        ranking.push( {position : i, pfp : users[i].pfp, name : users[i].name, score : score} )
     }
     ranking.sort((a, b) => b.score - a.score)
     for(let i=0; i<ranking.length; i++){

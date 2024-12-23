@@ -15,7 +15,7 @@ async function getFriendsAndPictures(object){
     for(let i=0; i<object.friends.length; i++){
         let friendObject = await userModels.findOne({ username : object.friends[i] })
         if(friendObject != null){
-            friendsAndPictures.push({ friendName : friendObject.username, pfp : friendObject.pfp })
+            friendsAndPictures.push({ friendUsername : friendObject.username, friendName : friendObject.name, pfp : friendObject.pfp })
         }
     }
     return friendsAndPictures
@@ -49,9 +49,9 @@ controller.loginGoogle = async(req, res) => {
     await connection()
     const object = await userModels.findOne({ username : req.query.username })
     if(object === null){    //Si no existe lo añadimos a la BBDD
-        await userModels.create({ username : req.query.username, password : null, friends : [], usageTime : 0, signupDate : new Date(), loginDate : new Date() , pfp : req.query.pfp, provider: 'google'}) //Anadimos el usuario a la base de datos
+        await userModels.create({ username : req.query.username, name : req.query.name, password : null, friends : [], usageTime : 0, signupDate : new Date(), loginDate : new Date() , pfp : req.query.pfp, provider: 'google'}) //Anadimos el usuario a la base de datos
     } else {                //Si existe lo actualizamos
-        await  userModels.updateOne({ username : req.query.username }, { $set : {loginDate : new Date(), pfp : req.query.pfp} })
+        await  userModels.updateOne({ username : req.query.username }, { $set : {loginDate : new Date(), name : req.query.name, pfp : req.query.pfp} })
     }
     res.end()
 }

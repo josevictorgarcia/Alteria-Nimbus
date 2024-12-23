@@ -36,7 +36,7 @@ controller.getRankingPage = async (req, res) => {
     for(let i=0; i<users.length; i++){
         let { bestFriend, totalMessages } = await getNumMessages(users[i].username)
         let score = 0.3*users[i].usageTime + 0.3*users[i].friends.length + 0.3*totalMessages
-        ranking.push( {position : i, pfp : users[i].pfp, username : users[i].username, score : score} )
+        ranking.push( {position : i, pfp : users[i].pfp, name : users[i].name, score : score} )
     }
     ranking.sort((a, b) => b.score - a.score)
     for(let i=0; i<ranking.length; i++){

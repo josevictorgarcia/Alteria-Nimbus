@@ -50,7 +50,7 @@ function deconstructRoom(room){
     return [string1, string2]
 }
 
-function setMessageStyle(message, username){
+async function setMessageStyle(message, username, friend){
     if(message.sender == username) {
         message.messageBox = 'usernameMessage'
         message.pictureAndName = 'usernamePictureAndName'
@@ -60,6 +60,8 @@ function setMessageStyle(message, username){
         message.messageBox = 'friendMessage'
         message.pictureAndName = 'friendPictureAndName'
         message.messageText = 'friendMessageText'
+        let object = await userModels.findOne({ username : friend })
+        message.sender = object.name
     }
 }
 
@@ -104,7 +106,7 @@ controller.getChatMessages = async (req, res) => {
     } else {    //Comprobar si funciona
         for (let i=0; i<object.messages.length; i++) {
             let message = object.messages[i]
-            setMessageStyle(message, username)
+            await setMessageStyle(message, username, req.query.friend)
         }
         res.render('message', {
             messages : object.messages,
@@ -127,7 +129,7 @@ controller.saveMessage = async (req, res) => {
 
 controller.printMessage = async (req, res) => {
     let message = { message : req.query.message, sender : req.query.username }
-    setMessageStyle(message, req.query.receiver)
+    await setMessageStyle(message, req.query.receiver, req.query.username)
     res.render('message', {
         messages : message
     })
@@ -152,7 +154,8 @@ async function getNumMessages(username){
         totalMessages += object2.messages.length
         if(object2.messages.length >= max){
             max = object2.messages.length
-            bestFriend = friend
+            let  object3 = await userModels.findOne({ username : friend })
+            bestFriend = object3.name
         }
     }
     return { bestFriend, totalMessages }

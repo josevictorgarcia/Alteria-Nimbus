@@ -56,7 +56,7 @@ controller.changeUsername = async (req, res) => {
                 }
             }
         }
-        await userModels.updateOne({ username : username }, { $set : {username : newUsername} })    //Actualizamos el nombre del usuario
+        await userModels.updateOne({ username : username }, { $set : {username : newUsername, name: newUsername} })    //Actualizamos el nombre del usuario
         let chats = await chatModels.find()     //Actualizamos los ids de los chats
         for (let k=0; k<chats.length; k++){
             let chat = chats[k].name
