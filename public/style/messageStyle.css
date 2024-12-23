@@ -5,16 +5,60 @@
     border-radius: 50%;
 }
 
-#usernameMessage {
-    display: flex;  
-    color: white; 
-    margin-top: 20px; 
-    flex-direction: row-reverse
+@media (width <= 768px){
+    #usernameMessage {
+        display: flex;  
+        color: white; 
+        margin-top: 20px; 
+        flex-direction: column
+    }
+
+    #friendMessage {
+        display: flex;  
+        color: white; 
+        margin-top: 20px; 
+        flex-direction: column
+    }
+
+    #usernamePictureAndName {
+        display: flex; 
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    
+    #friendPictureAndName {
+        display: flex; 
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
-#usernamePictureAndName {
-    display: flex; 
-    flex-direction: column;
+@media (width > 768px){
+    #usernameMessage {
+        display: flex;  
+        color: white; 
+        margin-top: 20px; 
+        flex-direction: row-reverse
+    }
+
+    #friendMessage {
+        display: flex;  
+        color: white; 
+        margin-top: 20px; 
+        flex-direction: row
+    }
+
+    #usernamePictureAndName {
+        display: flex; 
+        flex-direction: column;
+        align-items: flex-end;
+    }
+    
+    #friendPictureAndName {
+        display: flex; 
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
 #usernameMessageText {
@@ -24,18 +68,6 @@
     padding: 10px; 
     margin-right : 20px; 
     background-color: rgb(110, 179, 124);
-}
-
-#friendMessage {
-    display: flex;  
-    color: white; 
-    margin-top: 20px; 
-    flex-direction: row
-}
-
-#friendPictureAndName {
-    display: flex; 
-    flex-direction: column;
 }
 
 #friendMessageText {

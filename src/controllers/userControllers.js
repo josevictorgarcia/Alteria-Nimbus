@@ -55,6 +55,7 @@ function setMessageStyle(message, username){
         message.messageBox = 'usernameMessage'
         message.pictureAndName = 'usernamePictureAndName'
         message.messageText = 'usernameMessageText'
+        message.sender = 'You'          //Para que en lugar de que aparezca tu nombre, aparezca 'You'
     } else {
         message.messageBox = 'friendMessage'
         message.pictureAndName = 'friendPictureAndName'
