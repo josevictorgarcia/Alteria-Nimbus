@@ -14,19 +14,30 @@ controller.uploadProfilePicture = async (req, res) => {
     /*res.render('image', {
         image : req.file.path.slice(6)
     })*/
+    let user = await userModels.findOne({ username : username })
+    switch(user.provider){
+        case 'app':
 
-    if(req.file != undefined && await userModels.findOne({ username : username }) != null){
-        await connection()
-        await userModels.updateOne({ username : username }, { $set : {pfp : req.file.path.slice(7)} })
-        res.render('infoMessage', {
-            message : 'Profile picture changed successfully',
-            username : username
-        })
-    } else {
-        res.render('infoMessage', {
-            message : 'Could not change profile picture. Press back and try again',
-            username : username
-        })
+            if(req.file != undefined && await userModels.findOne({ username : username }) != null){
+                await connection()
+                await userModels.updateOne({ username : username }, { $set : {pfp : req.file.path.slice(7)} })
+                res.render('infoMessage', {
+                    message : 'Profile picture changed successfully',
+                    username : username
+                })
+            } else {
+                res.render('infoMessage', {
+                    message : 'Could not change profile picture. Press back and try again',
+                    username : username
+                })
+            }
+        break;
+        case 'google':
+            res.render('infoMessage', {
+                message : 'User already logged with another provider (Google)',
+                username : username
+            })
+        break;
     }
 }
 
@@ -44,62 +55,83 @@ async function updateMessages(chat, oldUsername, newUsername) {
 
 controller.changeUsername = async (req, res) => {
     let { username, newUsername } = req.body
-    let users = await userModels.find()
-    let sePuedeCambiar = (await userModels.findOne({ username : newUsername }) === null)
-    if(sePuedeCambiar){
-        for (let i=0; i<users.length; i++){
-            let object = await userModels.findOne({ username : users[i].username })
-            for (let j=0; j<object.friends.length; j++){    //De cada usuario, actualizamos su lista de amigos. Si se cambia de nombre un amigo, se cambia de nombre en su lista tambien
-                if(object.friends[j] === username){
-                    object.friends[j] = newUsername
-                    object.save('done')
+    let user = await userModels.findOne({ username : username })
+    switch(user.provider){
+        case 'app':
+            let users = await userModels.find()
+            let sePuedeCambiar = (await userModels.findOne({ username : newUsername }) === null)
+            if(sePuedeCambiar){
+                for (let i=0; i<users.length; i++){
+                    let object = await userModels.findOne({ username : users[i].username })
+                    for (let j=0; j<object.friends.length; j++){    //De cada usuario, actualizamos su lista de amigos. Si se cambia de nombre un amigo, se cambia de nombre en su lista tambien
+                        if(object.friends[j] === username){
+                            object.friends[j] = newUsername
+                            object.save('done')
+                        }
+                    }
                 }
+                await userModels.updateOne({ username : username }, { $set : {username : newUsername, name: newUsername} })    //Actualizamos el nombre del usuario
+                let chats = await chatModels.find()     //Actualizamos los ids de los chats
+                for (let k=0; k<chats.length; k++){
+                    let chat = chats[k].name
+                    let participants = deconstructRoom(chat)
+                    let newRoomName = ''
+                    if(participants[0] === username && participants[1] === username){   //Caso de que el chat sea para hablar contigo mismo
+                        newRoomName = makeRoom(newUsername, newUsername)
+                        await updateMessages(chat, username, newUsername)
+                    } else if(participants[0] === username){   //Si el usuario que se cambia el nombre de usuario es miembro de esa conversacion, cambiamos el id de la conversacion
+                        newRoomName = makeRoom(newUsername, participants[1])
+                        await updateMessages(chat, username, newUsername)    //Update username in array of messages
+                    } else if(participants[1] === username){
+                        newRoomName = makeRoom(newUsername, participants[0])
+                        await updateMessages(chat, username, newUsername)    //Update username in array of messages
+                    }
+                    if(newRoomName != ''){
+                        await chatModels.updateOne({ name : chat }, { $set : {name : newRoomName} })
+                    }
+                }
+                res.redirect(`/login?message=${'Username updated succesfully. Please log in again'}`)
+            } else {
+                res.render('infoMessage', {
+                    message : 'Could not change the username. Username already taken',
+                    username : username
+                })
             }
-        }
-        await userModels.updateOne({ username : username }, { $set : {username : newUsername, name: newUsername} })    //Actualizamos el nombre del usuario
-        let chats = await chatModels.find()     //Actualizamos los ids de los chats
-        for (let k=0; k<chats.length; k++){
-            let chat = chats[k].name
-            let participants = deconstructRoom(chat)
-            let newRoomName = ''
-            if(participants[0] === username && participants[1] === username){   //Caso de que el chat sea para hablar contigo mismo
-                newRoomName = makeRoom(newUsername, newUsername)
-                await updateMessages(chat, username, newUsername)
-            } else if(participants[0] === username){   //Si el usuario que se cambia el nombre de usuario es miembro de esa conversacion, cambiamos el id de la conversacion
-                newRoomName = makeRoom(newUsername, participants[1])
-                await updateMessages(chat, username, newUsername)    //Update username in array of messages
-            } else if(participants[1] === username){
-                newRoomName = makeRoom(newUsername, participants[0])
-                await updateMessages(chat, username, newUsername)    //Update username in array of messages
-            }
-            if(newRoomName != ''){
-                await chatModels.updateOne({ name : chat }, { $set : {name : newRoomName} })
-            }
-        }
-        res.redirect(`/login?message=${'Username updated succesfully. Please log in again'}`)
-    } else {
-        res.render('infoMessage', {
-            message : 'Could not change the username. Username already taken',
-            username : username
-        })
+        break;
+        case 'google':
+            res.render('infoMessage', {
+                message : 'User already logged with another provider (Google)',
+                username : username
+            })
+        break;
     }
 }
 
 controller.changePassword = async (req, res) => {
     let { username, oldPassword, newPassword } = req.body
-    console.log(username, oldPassword, newPassword)
-    const object = await userModels.findOne({ username : username, password : oldPassword })
-    if (object === null) {  //Contrasena incorrecta
-        res.render('infoMessage', {
-            message : 'Old password incorrect',
-            username : username
-        })
-    } else {
-        await userModels.updateOne({ username : username }, { $set : {password : newPassword} })
-        res.render('infoMessage', {
-            message : 'Password updated successfully',
-            username : username
-        })
+    let user = await userModels.findOne({ username : username })
+    switch(user.provider){
+        case 'app':
+            const object = await userModels.findOne({ username : username, password : oldPassword })
+            if (object === null) {  //Contrasena incorrecta
+                res.render('infoMessage', {
+                    message : 'Old password incorrect',
+                    username : username
+                })
+            } else {
+                await userModels.updateOne({ username : username }, { $set : {password : newPassword} })
+                res.render('infoMessage', {
+                    message : 'Password updated successfully',
+                    username : username
+                })
+            }
+        break;
+        case 'google':
+            res.render('infoMessage', {
+                message : 'User already logged with another provider (Google)',
+                username : username
+            })
+        break;
     }
 }
 
