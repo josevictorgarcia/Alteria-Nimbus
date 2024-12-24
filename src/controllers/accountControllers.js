@@ -135,4 +135,21 @@ controller.changePassword = async (req, res) => {
     }
 }
 
+controller.changeRole = async (req, res) => {
+    let { username, inputUsernameRole, newRole } = req.body
+    let user = await userModels.findOne({ username : inputUsernameRole })
+    if(user){
+        await userModels.updateOne({ username : inputUsernameRole }, { $set : {role : newRole} })
+        res.render('infoMessage', {
+            message : 'Role changed successfully',
+            username : username
+        })
+    } else {
+        res.render('infoMessage', {
+            message : 'Could not change role. Go back and try again',
+            username : username
+        })
+    }
+}
+
 export default controller

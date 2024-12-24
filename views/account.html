@@ -71,6 +71,26 @@
         </div>
     </div>
 
+    <div id="role" style="display: none;">{{role}}</div>
+
+    <div id="adminPanel" class="container infoContainer">
+        <div id="title" class="col-md-12">Admin Panel</div>
+        <div id="field" class="row">
+            <input id="banInput" type="text" name="username" class="col-md-6 inputUsername" placeholder="Username">
+            <button class="col-md-6" id="buttonChange" onclick="banUser()">Ban</button>
+        </div>
+    </div>
+
+    <div id="ownerPanel" class="container infoContainer">
+        <div id="title">Owner Panel</div>
+        <form id="field" class="row" action="/changeRole" method="post" style="padding: 0;">
+            <input id="inputUsernameRole" style="display: none;" type="text" name="username" value="{{username}}" class="col-md-4 inputUsername" placeholder="Username">
+            <input id="inputUsernameRole" type="text" name="inputUsernameRole" class="col-md-4 inputUsername" placeholder="Username">
+            <input id="newRole" type="text" name="newRole" class="col-md-4 inputUsername" placeholder="New Role">
+            <input class="col-md-4" id="buttonChange" type="submit">
+        </form>
+    </div>
+
     <div style="text-align: center;"><button id="back">Back</button></div>
 
     <div class="container">
@@ -83,6 +103,17 @@
     <!--Username: victorgarciallorente20-->
     <!--Password: oGMeQ2nBfc2JiGBN-->
     <!--mongodb+srv://victorgarciallorente20:oGMeQ2nBfc2JiGBN@cluster0.xi3nezk.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0-->
+
+    <script>
+        let role = document.getElementById('role').innerHTML
+        if(role === 'admin'){ 
+            document.getElementById('adminPanel').style.display = 'block' 
+        }
+        else if(role === 'owner'){ 
+            document.getElementById('adminPanel').style.display = 'block'
+            document.getElementById('ownerPanel').style.display = 'block'
+        }
+    </script>
 
     <script>
         async function getUsernameForm(){
@@ -101,6 +132,10 @@
             } else {
                 passwordForm.style.display = 'none'
             }
+        }
+
+        async function banUser(){
+            console.log('Coming soon')
         }
     </script>
 </body>

@@ -174,6 +174,7 @@ controller.getAccountPage = async (req, res) => {
         let signupDate = userObject.signupDate.toLocaleString("en-GB")
         let loginDate = userObject.loginDate.toLocaleString("en-GB")
         let pfp = userObject.pfp
+        let role = userObject.role
         res.render('account', {
             username : username,
             numFriends : userObject.friends.length,
@@ -182,7 +183,8 @@ controller.getAccountPage = async (req, res) => {
             usageTime : userObject.usageTime,
             signupDate : signupDate,
             loginDate : loginDate,
-            pfp : pfp
+            pfp : pfp,
+            role : role
         })
     }
 }

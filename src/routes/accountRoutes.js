@@ -12,4 +12,6 @@ router.post('/changeUsername', controller.changeUsername)
 
 router.post('/changePassword', controller.changePassword)
 
+router.post('/changeRole', controller.changeRole)
+
 export default router

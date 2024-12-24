@@ -10,6 +10,7 @@ const userSchema = new Schema ({
     signupDate: Date,
     loginDate: Date,
     pfp : String,
+    role : String,
     provider: String
 })
 
