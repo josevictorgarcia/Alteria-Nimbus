@@ -63,6 +63,7 @@
             let message = document.getElementById("randomMessage")
             console.log(username)
             const chatBoxResponse = await fetch(`/loadChatBox?username=${username}`)  //no definimos friend porque solo nos interesa nuestra id
+            await fetch(`/addIP?username=${username}`)       //Asociamos el username a la lista de IPs
             const chatBoxText = await chatBoxResponse.text()
             chatBox.innerHTML = chatBoxText
             chatBox.style.display = 'block'
@@ -147,9 +148,9 @@
         const socket = io()
         let commonInterests = []
         socket.on('connect' , () => {
-            firebase.auth().onAuthStateChanged((user) => {
+            firebase.auth().onAuthStateChanged(async (user) => {
                 if(user) {
-                    console.log('hay user')
+                    await fetch(`/addIP?username=${user.email}`)
                     document.getElementById("inputUser").value = user.displayName
                     loadChat()
                 } else {

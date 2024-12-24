@@ -14,4 +14,6 @@ router.post('/changePassword', controller.changePassword)
 
 router.post('/changeRole', controller.changeRole)
 
+router.post('/ban', controller.ban)
+
 export default router

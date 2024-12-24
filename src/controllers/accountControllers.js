@@ -2,6 +2,8 @@ import connection from '../database/connection.js'
 import userModels from '../database/models/userModels.js'
 import chatModels from '../database/models/chatModels.js'
 import { makeRoom, deconstructRoom } from '../controllers/userControllers.js'
+import { isOnline, getIP } from '../onlineUsers.js'
+import { ban } from '../banned.js'
 
 const controller = {}
 
@@ -147,6 +149,23 @@ controller.changeRole = async (req, res) => {
     } else {
         res.render('infoMessage', {
             message : 'Could not change role. Go back and try again',
+            username : username
+        })
+    }
+}
+
+controller.ban = async (req, res) => {
+    let { username, usernameBanned } = req.body
+    if(isOnline(usernameBanned)){
+        let ip = getIP(usernameBanned)
+        ban(ip)
+        res.render('infoMessage', {
+            message : 'User banned successfully',
+            username : username
+        })
+    } else {
+        res.render('infoMessage', {
+            message : 'User could not be banned',
             username : username
         })
     }

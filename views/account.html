@@ -75,10 +75,11 @@
 
     <div id="adminPanel" class="container infoContainer">
         <div id="title" class="col-md-12">Admin Panel</div>
-        <div id="field" class="row">
-            <input id="banInput" type="text" name="username" class="col-md-6 inputUsername" placeholder="Username">
-            <button class="col-md-6" id="buttonChange" onclick="banUser()">Ban</button>
-        </div>
+        <form id="field" class="row" action="/ban" method="post" style="padding: 0;">
+            <input id="banInput" style="display: none;" type="text" name="username" value="{{username}}" class="col-md-6 inputUsername" placeholder="Username">
+            <input id="banInput" type="text" name="usernameBanned" class="col-md-6 inputUsername" placeholder="Username">
+            <button class="col-md-6" id="buttonChange" type="submit">Ban</button>
+        </form>
     </div>
 
     <div id="ownerPanel" class="container infoContainer">
@@ -132,10 +133,6 @@
             } else {
                 passwordForm.style.display = 'none'
             }
-        }
-
-        async function banUser(){
-            console.log('Coming soon')
         }
     </script>
 </body>

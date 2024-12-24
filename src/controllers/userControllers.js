@@ -60,8 +60,11 @@ async function setMessageStyle(message, username, friend){
         message.messageBox = 'friendMessage'
         message.pictureAndName = 'friendPictureAndName'
         message.messageText = 'friendMessageText'
+        await connection()              //This line avoids timelimit on the next line
         let object = await userModels.findOne({ username : friend })
-        message.sender = object.name
+        if(object){                     //Asi nos aseguramos que no de error si el objeto no existe
+            message.sender = object.name
+        }
     }
 }
 

@@ -8,6 +8,10 @@ const router = express.Router()
 
 router.get('/', controller.index)
 
+router.get('/getIP', controller.getIP)
+
+router.get('/addIP', controller.addIP)
+
 router.get('/login', controller.getLoginPage)
 
 router.get('/rooms', controller.getRoomsPage)

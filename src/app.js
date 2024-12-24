@@ -13,6 +13,7 @@ import { makeRoom } from './controllers/userControllers.js'
 import { connectNoInterests, connectInterests, resetAllInterests } from './random.js'
 import accountRouter from './routes/accountRoutes.js'
 import rankingRouter from './routes/rankingRoutes.js'
+import { checkIfBanned } from './banned.js'
 
 const app = express()
 const server = http.createServer(app)
@@ -25,6 +26,8 @@ app.engine('html', mustacheExpress(), ".html");
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static(path.join(__dirname, '/../public')));
+
+app.use(checkIfBanned)
 
 app.use(indexRouter)
 app.use(loginRouter)

@@ -1,6 +1,7 @@
 import connection from '../database/connection.js'
 import userModels from '../database/models/userModels.js'
 import { getNumMessages } from './userControllers.js'
+import { addOnlineUser } from '../onlineUsers.js'
 
 const controller = {}
 
@@ -8,6 +9,15 @@ controller.index = (req, res) => {
     res.render('index', {
 
     })
+}
+
+controller.getIP = (req, res) => {
+    res.send(req.ip)
+}
+
+controller.addIP = (req, res) => {
+    addOnlineUser(req.query.username, req.ip)
+    res.end()
 }
 
 controller.getLoginPage = (req, res) => {
