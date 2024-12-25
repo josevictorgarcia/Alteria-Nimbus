@@ -1,3 +1,5 @@
+import { publicIpv4 } from 'public-ip';
+
 let bannedIPs = new Map()   //IP baneada --> fecha de baneo
 
 function ban(ip){
@@ -46,14 +48,14 @@ function showBannedIPs() {
     });
 }
 
-function checkIfBanned(req, res, next) {            //Function acting as middleware
-    const userIP = req.ip;
+async function checkIfBanned(req, res, next) {            //Function acting as middleware
+    const userIP = await publicIpv4();
 
     if (bannedIPs.has(userIP)) {
         // If the user's IP is banned, respond with a 403 Forbidden status
         return res.status(403).send('Your IP is banned');
     }
-    console.log('hello', userIP)
+    //console.log('hello', userIP)
     // If the user is not banned, proceed to the next middleware or route
     next();
 }

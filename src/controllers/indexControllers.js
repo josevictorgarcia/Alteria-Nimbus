@@ -2,6 +2,7 @@ import connection from '../database/connection.js'
 import userModels from '../database/models/userModels.js'
 import { getNumMessages } from './userControllers.js'
 import { addOnlineUser } from '../onlineUsers.js'
+import { publicIpv4 } from 'public-ip';
 
 const controller = {}
 
@@ -11,12 +12,24 @@ controller.index = (req, res) => {
     })
 }
 
-controller.getIP = (req, res) => {
-    res.send(req.ip)
+controller.getIP = async (req, res) => {
+    //https://github.com/sindresorhus/public-ip
+    //https://github.com/alsotang/externalip?tab=readme-ov-file
+
+    /*console.log(await publicIp()); // Falls back to IPv4
+    //=> 'fe80::200:f8ff:fe21:67cf'
+
+    console.log(await publicIpv6());
+    //=> 'fe80::200:f8ff:fe21:67cf'
+
+    console.log(await publicIpv4());
+    //=> '46.5.21.123'*/
+    res.send(await publicIpv4())
 }
 
-controller.addIP = (req, res) => {
-    addOnlineUser(req.query.username, req.ip)
+controller.addIP = async (req, res) => {
+    addOnlineUser(req.query.username, await publicIpv4())
+    console.log('Public Ipv4:', await publicIpv4());
     res.end()
 }
 
