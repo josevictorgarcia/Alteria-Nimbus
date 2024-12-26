@@ -1,5 +1,3 @@
-import { publicIpv4 } from 'public-ip';
-
 let bannedIPs = new Map()   //IP baneada --> fecha de baneo
 
 function ban(ip){
@@ -49,7 +47,7 @@ function showBannedIPs() {
 }
 
 async function checkIfBanned(req, res, next) {            //Function acting as middleware
-    const userIP = await publicIpv4();
+    const userIP = await getIP();
 
     if (bannedIPs.has(userIP)) {
         // If the user's IP is banned, respond with a 403 Forbidden status
@@ -60,4 +58,10 @@ async function checkIfBanned(req, res, next) {            //Function acting as m
     next();
 }
 
-export { ban, isBanned, unban, showBannedIPs, checkIfBanned }
+async function getIP(){
+    let ipObject = await fetch('https://api.ipify.org/?format=json')
+    let ip = await ipObject.json()
+    return ip.ip
+}
+
+export { ban, isBanned, unban, showBannedIPs, checkIfBanned, getIP }

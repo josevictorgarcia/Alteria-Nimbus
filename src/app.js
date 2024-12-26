@@ -21,6 +21,7 @@ const io = new Server(server)
 
 app.set('views', __dirname + '/../views');
 app.set('view engine', 'html');
+app.set('trust proxy', true)
 app.engine('html', mustacheExpress(), ".html");
 
 app.use(bodyParser.urlencoded({ extended: true }));
